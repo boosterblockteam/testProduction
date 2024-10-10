@@ -1,0 +1,28 @@
+.mySwiper {
+    position: static !important;
+}
+
+
+.swiper-button-next, .swiper-button-prev {	
+    position: absolute !important;
+    top: 50% !important;
+    color: #554D77;
+    width: 7px !important;
+    height: 16px !important;
+}
+
+.swiper-button-next{
+    right: 16px !important;
+}
+
+.swiper-button-prev{
+    left: 16px !important;
+}
+
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: 0 !important;
+}
+
+.swiper-pagination{
+    --swiper-pagination-color: #554D77;
+}

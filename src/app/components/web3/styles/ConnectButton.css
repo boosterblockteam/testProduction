@@ -1,0 +1,45 @@
+.tw-connect-wallet {
+  background: var(--Light-Purple-Gradient, linear-gradient(180deg, #AD98FF 0%, #612DFE 100%)) !important; 
+  padding: 10px 16px !important;
+  color: white !important;
+  font-size: 1em !important;
+  font-weight: 600 !important;
+  border-radius: 10px !important;
+  width: 100% !important;
+  height: auto !important;
+}
+
+.tw-connect-wallet:hover {
+  background: #7a2ff4;
+}
+
+.info-wallet-nft .tw-connected-wallet {
+  color: white !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  padding: 9px 8px 8px 8px !important;
+  border: 1px solid #ffffff1a !important;
+  min-width: 125px !important;
+  height: auto !important;
+}
+
+.info-wallet-nft .css-1d4s0we{
+  width: 22px !important;
+  height: 20px !important;
+}
+
+.info-wallet-nft .tw-connected-wallet__address {
+  font-size: 10px !important;
+  overflow: visible !important;
+}
+
+.info-wallet-nft .tw-connected-wallet__balance {
+  font-size: 10px !important;
+  overflow: visible !important;
+}
+
+.css-15sq3rj img {
+  filter: hue-rotate(40deg);
+}
