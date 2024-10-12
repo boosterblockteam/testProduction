@@ -34,18 +34,19 @@ import { formatCurrencyInteger } from "@/utils/formatCurrency";
 import { getTimeDifference } from "@/app/[locale]/(logged-in)/myTeam/utils/get-time-difference";
 import { addSeconds } from "date-fns";
 
-// const testWallet = "0xaaD20d6bE313Be37d33F98B2d61A5561D540FE2e"; // test: testWallet
-// const testWallet = "0x0C88d6626c255A2b8E215F966ab26A201CCF27Ed";
+// const testNFTId: number | null = 0; // test: testNFTId
+const testNFTId: number | null = null; // test: testNFTId
 
 const { myTeamService } = ServiceProvider.getInstance().getServices();
 export interface UsersReferral {
   username: string;
   nftName: string;
   amountStake: string;
-  NFTId: string;
+  NFTId: number;
   wallet: string;
   plan: string;
   image: string;
+  upline: number;
   uplineAddress: string;
   numberOfReferralsTotal: number;
   numberOfReferralsL: number;
@@ -111,8 +112,13 @@ const MyTeam = ({ type, infoUserLevel }) => {
     if (usersReferral) {
       setSeeMoreButtonLeft(Boolean(usersReferral.referrals[0])); // aqui guardamos lo que necesitas del objeto de la izquierda
       setSeeMoreButtonRight(Boolean(usersReferral.referrals[1])); // aqui guardamos lo que necesitas del objeto de la derecha
-      setSeeMoreButtonHome(user?.address !== usersReferral?.wallet);
-      // setSeeMoreButtonHome(testWallet !== usersReferral?.wallet); // test: usar la direccion de irving
+
+      if (testNFTId !== null) {
+        setSeeMoreButtonHome(testNFTId !== usersReferral?.NFTId); // test: usar la direccion de irving
+      } else {
+        setSeeMoreButtonHome(user?.selectedAccount?.idAccount !== usersReferral?.NFTId);
+      }
+
     }
   }, [usersReferral]);
 
@@ -142,9 +148,15 @@ const MyTeam = ({ type, infoUserLevel }) => {
 
   async function loadUsersReferrals() {
     try {
-      if (user?.address) {
-        const { usersReferral } = await myTeamService.getMyTeam(user.address);
-        // const { usersReferral } = await myTeamService.getMyTeam(testWallet); // test: usar la direccion de irving
+      if (testNFTId !== null) {
+        const { usersReferral } = await myTeamService.getMyTeam(testNFTId); // test: usar la direccion de irving
+        
+        console.log({ usersReferral });
+
+        setUsersReferral(usersReferral);
+
+      } else if (user?.selectedAccount?.idAccount) {
+        const { usersReferral } = await myTeamService.getMyTeam(user.selectedAccount.idAccount);
 
         console.log({ usersReferral });
 
@@ -159,7 +171,7 @@ const MyTeam = ({ type, infoUserLevel }) => {
     console.log("seeMoreButtonLeft");
 
     if (seeMoreButtonLeft && usersReferral) {
-      const myTeamResponse = await myTeamService.getLastLeft(usersReferral.wallet);
+      const myTeamResponse = await myTeamService.getLastLeft(usersReferral.NFTId);
       setUsersReferral(myTeamResponse.usersReferral);
     }
   }
@@ -168,33 +180,38 @@ const MyTeam = ({ type, infoUserLevel }) => {
     console.log("seeMoreButtonRight");
 
     if (seeMoreButtonRight && usersReferral) {
-      const myTeamResponse = await myTeamService.getLastRight(usersReferral.wallet);
+      const myTeamResponse = await myTeamService.getLastRight(usersReferral.NFTId);
       setUsersReferral(myTeamResponse.usersReferral);
     }
   }
 
   async function onClickButtonHome() {
     console.log("seeMoreButtonHome");
+    if (testNFTId !== null) {
 
-    if (user) {
-      const myTeamResponse = await myTeamService.getMyTeam(user.address);
-      // const myTeamResponse = await myTeamService.getMyTeam(testWallet); // test: usar la direccion de irving
+      const myTeamResponse = await myTeamService.getMyTeam(testNFTId); // test: usar la direccion de irving
       setUsersReferral(myTeamResponse.usersReferral);
+
+    } else if (user?.selectedAccount?.idAccount) {
+
+      const myTeamResponse = await myTeamService.getMyTeam(user.selectedAccount.idAccount);
+      setUsersReferral(myTeamResponse.usersReferral);
+
     }
   }
 
   async function onClickButtonUp() {
     console.log("seeMoreButtonUp");
 
-    if (seeMoreButtonHome && usersReferral?.uplineAddress) {
-      const myTeamResponse = await myTeamService.getMyTeam(usersReferral.uplineAddress);
+    if (seeMoreButtonHome && usersReferral?.upline) {
+      const myTeamResponse = await myTeamService.getMyTeam(usersReferral.upline);
       setUsersReferral(myTeamResponse.usersReferral);
     }
   }
 
-  async function onClickButtonUserCard(wallet: string) {
-    if (wallet !== user?.address) {
-      const myTeamResponse = await myTeamService.getMyTeam(wallet);
+  async function onClickButtonUserCard(NFTId: number) {
+    if (NFTId !== user?.selectedAccount?.idAccount) {
+      const myTeamResponse = await myTeamService.getMyTeam(NFTId);
       setUsersReferral(myTeamResponse.usersReferral);
     }
   }
@@ -320,7 +337,7 @@ const MyTeam = ({ type, infoUserLevel }) => {
 
 export default MyTeam;
 
-function ReferrerParent({ user, onClickButtonUserCard }: { user: UsersReferral; onClickButtonUserCard: (wallet: string) => void }) {
+function ReferrerParent({ user, onClickButtonUserCard }: { user: UsersReferral; onClickButtonUserCard: (NFTId: number) => void }) {
   const t = useTranslations();
   const router = useRouter();
 
@@ -341,7 +358,7 @@ function ReferrerParent({ user, onClickButtonUserCard }: { user: UsersReferral; 
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => onClickButtonUserCard(user.wallet)}>
+      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => onClickButtonUserCard(user.NFTId)}>
         <div className="rounded-t-[10px] relative h-[20px] w-full" style={{ backgroundColor: getRankingAccountColor(user.lvlAccount) }}>
           <div className="w-[32px] h-[32px] absolute -top-1/2 right-1/2 transform translate-x-1/2 translate-y-1/2">
             <Image src={user.image || image1} alt="Imagen NFT" className=" w-full h-full rounded-[16px] object-cover" width={32} height={32} />
@@ -456,7 +473,7 @@ function PrimaryReferrals({
   user?: UsersReferral;
   router: AppRouterInstance;
   position: "left" | "right";
-  onClickButtonUserCard: (wallet: string) => void;
+  onClickButtonUserCard: (NFTId: number) => void;
 }) {
   const t = useTranslations();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -468,7 +485,7 @@ function PrimaryReferrals({
   return (
     <>
       <div className="flex flex-col items-center justify-center text-[8px] text-white">
-        <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => user?.wallet && onClickButtonUserCard(user.wallet)}>
+        <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => user?.NFTId && onClickButtonUserCard(user.NFTId)}>
           <div className="rounded-t-[10px] relative h-[20px] w-full" style={user ? { backgroundColor: getRankingAccountColor(user.lvlAccount) } : {}}>
             <div className="w-[32px] h-[32px] absolute -top-1/2 right-1/2 transform translate-x-1/2 translate-y-1/2">
               {user ? (
@@ -573,8 +590,8 @@ function PrimaryReferrals({
           <div className="p-6">
             <p className="text-[16px] text-[#1E0E39] text-center mb-6">{t("How would you like to occupy this NFT account")}?</p>
             <div>
-              <ButtonPrimary text={t("Add New Own Account")} onClickFn={() => router.push("/myTeam/new-own-account")} classname="mb-4" />
-              <ButtonPrimary text={t("Add New Partner")} onClickFn={() => router.push("/myTeam/new-partner")} />
+              <ButtonPrimary disabled text={t("Add New Own Account")} onClickFn={() => router.push("/myTeam/new-own-account")} classname="mb-4" />
+              <ButtonPrimary disabled text={t("Add New Partner")} onClickFn={() => router.push("/myTeam/new-partner")} />
             </div>
           </div>
         </div>
@@ -595,7 +612,7 @@ function SecondaryReferrals({
   userParent?: UsersReferral;
   position: "left" | "right";
   parentPosition: "left" | "right";
-  onClickButtonUserCard: (wallet: string) => void;
+  onClickButtonUserCard: (NFTId: number) => void;
 }) {
   const t = useTranslations();
   const router = useRouter();
@@ -604,7 +621,7 @@ function SecondaryReferrals({
 
   return (
     <div className="flex flex-col items-center justify-center text-[8px]">
-      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => user?.wallet && onClickButtonUserCard(user.wallet)}>
+      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => user?.NFTId && onClickButtonUserCard(user.NFTId)}>
         <div
           className="rounded-t-[10px] relative h-[20px] w-full"
           style={{ backgroundColor: user && userParent ? getRankingAccountColor(userParent.lvlAccount) : "transparent" }}
@@ -662,8 +679,8 @@ function SecondaryReferrals({
           <div className="p-6">
             <p className="text-[16px] text-[#1E0E39] text-center mb-6">{t("How would you like to occupy this NFT account")}?</p>
             <div>
-              <ButtonPrimary text={t("Add New Own Account")} onClickFn={() => router.push("/myTeam/new-own-account")} classname="mb-4" />
-              <ButtonPrimary text={t("Add New Partner")} onClickFn={() => router.push("/myTeam/new-partner")} />
+              <ButtonPrimary disabled text={t("Add New Own Account")} onClickFn={() => router.push("/myTeam/new-own-account")} classname="mb-4" />
+              <ButtonPrimary disabled text={t("Add New Partner")} onClickFn={() => router.push("/myTeam/new-partner")} />
             </div>
           </div>
         </div>
