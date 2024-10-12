@@ -203,7 +203,7 @@ const MyTeam = ({ type, infoUserLevel }) => {
   async function onClickButtonUp() {
     console.log("seeMoreButtonUp");
 
-    if (seeMoreButtonHome && usersReferral?.upline) {
+    if (seeMoreButtonHome && (usersReferral?.upline !== null && usersReferral?.upline !== undefined)) {
       const myTeamResponse = await myTeamService.getMyTeam(usersReferral.upline);
       setUsersReferral(myTeamResponse.usersReferral);
     }
