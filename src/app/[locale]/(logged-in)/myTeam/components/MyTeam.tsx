@@ -155,7 +155,7 @@ const MyTeam = ({ type, infoUserLevel }) => {
 
         setUsersReferral(usersReferral);
 
-      } else if (user?.selectedAccount?.idAccount) {
+      } else if (user?.selectedAccount?.idAccount !== null && user?.selectedAccount?.idAccount !== undefined) {
         const { usersReferral } = await myTeamService.getMyTeam(user.selectedAccount.idAccount);
 
         console.log({ usersReferral });
@@ -192,7 +192,7 @@ const MyTeam = ({ type, infoUserLevel }) => {
       const myTeamResponse = await myTeamService.getMyTeam(testNFTId); // test: usar la direccion de irving
       setUsersReferral(myTeamResponse.usersReferral);
 
-    } else if (user?.selectedAccount?.idAccount) {
+    } else if (user?.selectedAccount?.idAccount !== null && user?.selectedAccount?.idAccount !== undefined) {
 
       const myTeamResponse = await myTeamService.getMyTeam(user.selectedAccount.idAccount);
       setUsersReferral(myTeamResponse.usersReferral);
@@ -485,7 +485,7 @@ function PrimaryReferrals({
   return (
     <>
       <div className="flex flex-col items-center justify-center text-[8px] text-white">
-        <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => user?.NFTId && onClickButtonUserCard(user.NFTId)}>
+        <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => (user?.NFTId !== null && user?.NFTId !== undefined) && onClickButtonUserCard(user.NFTId)}>
           <div className="rounded-t-[10px] relative h-[20px] w-full" style={user ? { backgroundColor: getRankingAccountColor(user.lvlAccount) } : {}}>
             <div className="w-[32px] h-[32px] absolute -top-1/2 right-1/2 transform translate-x-1/2 translate-y-1/2">
               {user ? (
@@ -621,7 +621,7 @@ function SecondaryReferrals({
 
   return (
     <div className="flex flex-col items-center justify-center text-[8px]">
-      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => user?.NFTId && onClickButtonUserCard(user.NFTId)}>
+      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => (user?.NFTId !== null && user?.NFTId !== undefined) && onClickButtonUserCard(user.NFTId)}>
         <div
           className="rounded-t-[10px] relative h-[20px] w-full"
           style={{ backgroundColor: user && userParent ? getRankingAccountColor(userParent.lvlAccount) : "transparent" }}
