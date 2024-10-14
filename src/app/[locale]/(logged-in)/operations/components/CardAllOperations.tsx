@@ -166,7 +166,8 @@ const CardAllOperations = ({ dataCard }: Props) => {
               <p className="font-bold text-center mb-2">{t("Operation Time")}</p>
               <Countdown
                 bgColor="bg-[#F8F8FA]"
-                dateEnd={new Date()}
+                endDate={new Date()}
+                nowDate={null}
                 classDate="text-[14px]"
                 classname="flex justify-center items-center rounded-[6px] bg-[#F8F8FA] px-2"
               />

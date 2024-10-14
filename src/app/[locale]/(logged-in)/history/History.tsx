@@ -86,7 +86,7 @@ const History = ({ isDashboard }: any) => {
 
   const NUMBER_BY_PAGE = 10;
   const { currentPage, elemetsVisibleByPage, goToNextPage, goToPage, goToPreviousPage, totalPages } = usePaginate({
-    listElement: dataHistoryInicial,
+    listElement: dataHistoryFiltered,
     numberByPage: NUMBER_BY_PAGE,
   });
 
