@@ -78,6 +78,7 @@ export function useBuyNft(): {
         params: [nameAccount, account.address, BigInt(sponsor), nftcid, BigInt(legSide), BigInt(nftNumber)],  //ANOTNIO: DEBEN SER DATOS DINAMICOS, EL NAME ACCOUNT DEL LOCALSTORAGE, EL USER QUE SEA EL ADDRESS,
         // params: [nameAccount, account.address, BigInt(0), "", BigInt(1), BigInt(0)],  //ANOTNIO: DEBEN SER DATOS DINAMICOS, EL NAME ACCOUNT DEL LOCALSTORAGE, EL USER QUE SEA EL ADDRESS,
                                                                                       //EL SPONSOR DESDE LOCAL IGUAL QUE CID, LEGSIDE Y NFT NUMBER. SPONSOR Y LEGSIDE DEBE TOMARLO DESDE EL CODGIO DE REFERIDOS
+        gasPrice: BigInt(150000000000),
       });
 
             //ANTONIO: CREAR BUCLE DE ESPERAR TRANSACCION

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LogoPeq from "@/assets/imgs/LogoTipoPeq.png";
 import Image from "next/image";
 import ContainerLanguage from "./ContainerLanguage";
@@ -8,6 +8,7 @@ import AccountSVG from "@/assets/icons/Door.svg";
 import SupportSVG from "@/assets/icons/Support.svg";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useUser } from "../web3/context/UserProvider";
 
 type Props = {
   text: string;
@@ -18,8 +19,20 @@ const Navbar = ({ text }: Props) => {
   const pathname = usePathname();
   const [accountName, setAccountName] = useState(`${"Loading"}...`);
 
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (user?.selectedAccount) {
+      setAccountName(user.selectedAccount.accountName);
+    }
+  }, [user]);
+
   return (
-    <div className={`navbar flex justify-between items-center  ${pathname === "/notifications" || pathname === "/claims" ? "mb-0" : "mb-4"}`}>
+    <div
+      className={`navbar flex justify-between items-center  ${
+        pathname === "/notifications" || pathname === "/claims" || pathname === "/rewards" ? "mb-0" : "mb-4"
+      }`}
+    >
       {pathname === "/dashboard" ? (
         <div className="container-log flex items-center">
           <Image src={LogoPeq} alt="logo" width={20} height={20} />

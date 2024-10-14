@@ -191,7 +191,7 @@ const History = ({ isDashboard }: any) => {
         )}
 
         {elemetsVisibleByPage.length > 0 ? (
-          <div className={`${isDashboard ? "px-2 mt-[25px]" : "component-transactions"}`}>
+          <div className={`${isDashboard ? "px-2 mt-[25px]" : "p-4 rounded-[16px] bg-[#ffffff14] text-white "}`}>
             {getElementsToShow().map((history) =>
               isDashboard ? (
                 <div key={history.id} className="flex justify-between items-center py-2 border-b border-solid border-[#F2F3F8] last:border-none">
@@ -208,7 +208,10 @@ const History = ({ isDashboard }: any) => {
                   </div>
                 </div>
               ) : (
-                <div key={history.id} className="container-map flex flex-col items-center">
+                <div
+                  key={history.id}
+                  className="container-map flex flex-col items-center border-b border-solid border-[#ffffff1a] pb-4 pt-4 first:pt-0 last:border-0 last:pb-0"
+                >
                   <div className="p-1 rounded-[100px] border border-solid border-[#ffffff1a] w-4/5 flex justify-between items-center mx-auto mb-1">
                     <div className="py-[2px] px-2 rounded-[20px] border border-solid border-[#ffffff1a]">
                       <p className="text-white font-bold text-[10px] text-center">
@@ -221,23 +224,23 @@ const History = ({ isDashboard }: any) => {
                       <span>{history.time}</span>
                     </div>
                   </div>
-                  <div className="my-2 w-full">
+                  <div className="my-2 w-full text-[14px] text-white">
                     <div className="flex justify-between items-center mb-2">
-                      <p className="text-[#A9AEB4] text-[14px] ">{t("Status")}</p>
-                      <p className="text-white text-[14px] ">Successful</p>
+                      <p className="text-[#A9AEB4] ">{t("Status")}</p>
+                      <p>Successful</p>
                     </div>
                     <div className="flex justify-between items-center mb-2">
-                      <p className="text-[#A9AEB4] text-[14px] ">{t("Amount")}</p>
-                      <p className="text-white text-[14px] ">${history.amount}</p>
+                      <p className="text-[#A9AEB4] ">{t("Amount")}</p>
+                      <p>${history.amount}</p>
                     </div>
 
                     <div className="flex justify-between items-center mb-2">
-                      <p className="text-[#A9AEB4] text-[14px] ">{t("Performance Fee")}</p>
-                      <p className="text-white text-[14px] ">${history.perfomanceFee}</p>
+                      <p className="text-[#A9AEB4] ">{t("Performance Fee")}</p>
+                      <p>${history.perfomanceFee}</p>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-[#A9AEB4] text-[14px] ">{t("Total")}</p>
-                      <p className="text-white text-[14px] ">${history.total}</p>
+                      <p className="text-[#A9AEB4] ">{t("Total")}</p>
+                      <p>${history.total}</p>
                     </div>
                   </div>
                   <button className="text-[#20DABB] text-[12px] font-bold underline cursor-pointer" onClick={() => handleButtonMoreDetails(history)}>

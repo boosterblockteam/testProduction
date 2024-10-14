@@ -44,25 +44,45 @@ const DraggableMenu: React.FC = () => {
   const t = useTranslations();
 
   const initialListMenu: ListMenu[] = [
-    { id: 1, title: t("My NFTs"), icon: MyAccountsIcon, link: `my-nfts`, isActive: true },
-    { id: 2, title: t("My Team"), icon: MyTeamIcon, link: `myTeam`, isActive: true },
+    { id: 1, title: t("My NFTs"), icon: MyAccountsIcon, link: "my-nfts", isActive: true },
+    { id: 2, title: t("My Team"), icon: MyTeamIcon, link: "myTeam", isActive: true },
     { id: 3, title: t("Claims"), icon: ClaimIcon, link: "", isActive: true },
-    { id: 4, title: t("Membership"), icon: MembershipIcon, link: ``, isActive: true },
+    { id: 4, title: t("Membership"), icon: MembershipIcon, link: "", isActive: true },
     { id: 5, title: t("Rewards"), icon: RewardPoolIcon, link: "", isActive: true },
     { id: 6, title: t("Ranking"), icon: RankingIcon, link: "", isActive: true },
     { id: 7, title: t("History"), icon: HistoryIcon, link: "", isActive: true },
     { id: 8, title: t("Transactions"), icon: TransactionsIcon, link: "", isActive: true },
-    { id: 9, title: t("Governance"), icon: GovernanceIcon, link: ``, isActive: true },
-    { id: 10, title: t("Operations"), icon: OperationsIcon, link: ``, isActive: true },
-    { id: 11, title: t("Marketing"), icon: MarketingIcon, link: ``, isActive: true },
-    { id: 12, title: t("Tools"), icon: ToolsIcon, link: ``, isActive: true },
-    { id: 13, title: t("Seasons"), icon: SeasonsIcon, link: ``, isActive: true },
-    { id: 14, title: t("Charity"), icon: CharityIcon, link: ``, isActive: true },
-    { id: 15, title: t("Settings"), icon: SettingsIcon, link: ``, isActive: true },
-    { id: 16, title: t("Profile"), icon: ProfileIcon, link: `profile`, isActive: true },
+    { id: 9, title: t("Governance"), icon: GovernanceIcon, link: "", isActive: true },
+    { id: 10, title: t("Operations"), icon: OperationsIcon, link: "", isActive: true },
+    { id: 11, title: t("Marketing"), icon: MarketingIcon, link: "", isActive: true },
+    { id: 12, title: t("Tools"), icon: ToolsIcon, link: "", isActive: true },
+    { id: 13, title: t("Seasons"), icon: SeasonsIcon, link: "", isActive: true },
+    { id: 14, title: t("Charity"), icon: CharityIcon, link: "", isActive: true },
+    { id: 15, title: t("Settings"), icon: SettingsIcon, link: "", isActive: true },
+    { id: 16, title: t("Profile"), icon: ProfileIcon, link: "profile", isActive: true },
   ];
 
-  const [menuItems, setMenuItems] = useState<ListMenu[]>(initialListMenu);
+  const [menuItems, setMenuItems] = useState<ListMenu[]>(() => {
+    const savedMenuItems = localStorage.getItem("menuItems");
+    if (savedMenuItems) {
+      const menuItemsStorageArray: ListMenu[] = JSON.parse(savedMenuItems);
+      return menuItemsStorageArray.map((item: ListMenu) => {
+        const foundItem = initialListMenu.find((menuItem) => menuItem.id === item.id);
+        if (foundItem) {
+          return {
+            ...item,
+            title: foundItem.title,
+            icon: foundItem.icon,
+            link: foundItem.link,
+            isActive: foundItem.isActive,
+          };
+        }
+        return item;
+      });
+    } else {
+      return initialListMenu;
+    }
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const chunkedOptionsMenu = menuItems.reduce((resultArray, item, index) => {
@@ -92,13 +112,6 @@ const DraggableMenu: React.FC = () => {
       });
     }
   };
-
-  useEffect(() => {
-    const menuItemsStorage = localStorage.getItem("menuItems");
-    if (menuItems && menuItemsStorage) {
-      setMenuItems(JSON.parse(menuItemsStorage));
-    }
-  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {

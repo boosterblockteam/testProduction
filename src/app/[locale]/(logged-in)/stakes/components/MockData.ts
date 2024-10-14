@@ -156,6 +156,7 @@ export interface InfoMembership {
   amount: string;
   share: number;
   myProfit: string;
+  performanceFee: string;
 }
 
 export const infoMembership = [
@@ -165,7 +166,8 @@ export const infoMembership = [
       type: "Stake",
       amount: "1,000",
       share: 1,
-      myProfit: "10,000" 
+      myProfit: "10,000",
+      performanceFee: "200"
   },
   {
       id: 2,
@@ -173,7 +175,8 @@ export const infoMembership = [
       type: "Stake",
       amount: "1,000",
       share: 1,
-      myProfit: "10,000" 
+      myProfit: "10,000",
+       performanceFee: "500"
   },
 ]
 

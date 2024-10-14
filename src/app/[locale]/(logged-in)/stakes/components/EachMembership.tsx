@@ -2,20 +2,13 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { InfoMembership } from "./MockData";
-import ButtonPrimary from "@/app/components/generals/ButtonPrimary";
-import { useRouter } from "next/navigation";
+
 type Props = {
   infoMembership: InfoMembership[];
 };
 
 const EachMembreship = ({ infoMembership }: Props) => {
   const t = useTranslations();
-  const router = useRouter();
-
-  const buttonClaimRewards = () => {
-    console.log("buttonClaimRewards");
-    // router.push(`/operations?type=claim`);
-  };
 
   return (
     <>
@@ -36,6 +29,10 @@ const EachMembreship = ({ infoMembership }: Props) => {
                     <p className="text-[#A9AEB4] text-[10px]">{info.share}%</p>
                   </div>
                   <div className="flex justify-between items-center mt-2">
+                    <p className="text-[#554D77] text-[10px]">{t("Performance Fee")}</p>
+                    <p className="text-[#A9AEB4] text-[10px]">${info.performanceFee}</p>
+                  </div>
+                  <div className="flex justify-between items-center mt-2">
                     <p className="text-[#554D77] text-[10px]">{t("My Profit")}</p>
                     <p className="text-[#A9AEB4] text-[10px]">${info.myProfit}</p>
                   </div>
@@ -47,8 +44,6 @@ const EachMembreship = ({ infoMembership }: Props) => {
           )}
         </div>
       </div>
-
-      <ButtonPrimary text={t("Claim Total Rewards")} onClickFn={buttonClaimRewards} />
     </>
   );
 };

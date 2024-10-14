@@ -145,6 +145,7 @@ export function useRegister(): {
       contract: tokenContract, 
       method: "approve", 
       params: [nftContract.address, BigInt(30000000)],
+      gasPrice: BigInt(150000000000),
     });
 
     const { transactionHash: approvalTokenHash } = await sendTransaction({
@@ -189,6 +190,7 @@ export function useRegister(): {
       method: "approve", 
       params: [membershipContract.address, BigInt(amount)], //ANTONIO: Esto debe tomar el valor de la membresia y multipliarlo por 1000000 (6 decimales)
                                                                 //JOACO: Dejar toda las membresias con 6 decimales
+      gasPrice: BigInt(150000000000),
     });
 
     const { transactionHash: approvalTokenHash } = await sendTransaction({
@@ -232,6 +234,7 @@ export function useRegister(): {
       contract: tokenContract, 
       method: "approve", 
       params: [stakingContract.address, BigInt(amount)],
+      gasPrice: BigInt(150000000000),
     });
 
     const { transactionHash: approvalTokenHash } = await sendTransaction({

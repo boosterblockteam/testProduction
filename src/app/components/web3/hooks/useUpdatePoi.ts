@@ -110,6 +110,7 @@ export function useUpdatePoi(): {
           encryptedWspLink,
           encryptedBio,
         ],
+        gasPrice: BigInt(150000000000),
       });
 
       console.log({transaction})

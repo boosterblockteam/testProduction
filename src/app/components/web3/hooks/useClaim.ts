@@ -43,6 +43,7 @@ export function useClaim(): {
         contract: nftContract,
         method: "claimNftReward",
         params: [BigInt(user.selectedAccount.idAccount)], //ID DE CUENTA
+        gasPrice: BigInt(150000000000),
       });
 
       const { transactionHash } = await sendTransaction({
@@ -93,6 +94,7 @@ export function useClaim(): {
         contract: membershipContract,
         method: "claimMembershipReward",
         params: [BigInt(user.selectedAccount.idAccount)], //ID DE CUENTA
+        gasPrice: BigInt(150000000000),
       });
 
       const { transactionHash } = await sendTransaction({

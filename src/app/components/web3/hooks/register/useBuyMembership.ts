@@ -51,6 +51,7 @@ export function useBuyMembership(): {
         // BigInt(0), //ANTONIO: DEBE SER TOMADO DE LOCAL STORAGE
         promoCode,
       ],
+      gasPrice: BigInt(150000000000),
     });
     
     try {

@@ -12,43 +12,18 @@ import IconCloseSVG from "@/assets/icons/closeHistory.svg";
 import ButtonPrimary from "@/app/components/generals/ButtonPrimary";
 import { useRouter } from "next/navigation";
 import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
+import TawkToWidget from "./TawkToWidget";
 
 const Support = () => {
   const t = useTranslations();
   const router = useRouter();
 
   // Tawk Messenger
-  const propertyId = "66ff07be37379df10df16bb3";
-  const widgetId = "1i9a3cg4a";
-  const tawkMessengerRef = useRef();
+  // const propertyId = "66ff07be37379df10df16bb3";
+  // const widgetId = "1i9a3cg4a";
+  // const tawkMessengerRef = useRef();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && typeof (window as any).Tawk_API !== "undefined") {
-      var Tawk_API = (window as any).Tawk_API || {};
-
-      Tawk_API.customStyle = {
-        visibility: {
-          desktop: {
-            position: "br",
-            xOffset: "60px",
-            yOffset: 20,
-          },
-          mobile: {
-            position: "br",
-            xOffset: "20px",
-            yOffset: "74px",
-          },
-          bubble: {
-            rotate: "0deg",
-            xOffset: -20,
-            yOffset: 0,
-          },
-        },
-      };
-    }
-  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined" && typeof (window as any).Tawk_API !== "undefined") {
@@ -94,7 +69,7 @@ const Support = () => {
             <span className="font-bold">{t("Hello")}! </span>
             {t("If you have any questions about our system, you can visit")}
           </p>
-          <Link href="www.help.defily.ai" className="text-[#AD98FF] text-[16px] font-bold cursor-pointer" target="_blank">
+          <Link href="https://help.defily.ai/" className="text-[#AD98FF] text-[16px] font-bold cursor-pointer" target="_blank">
             help.defily.ai
           </Link>
           <p className="mt-1">{t("where you'll find a wide variety of information and resources about our DApp")}.</p>
@@ -108,7 +83,8 @@ const Support = () => {
           <div className="flex items-center justify-end absolute -top-[12px] right-0"> */}
         {/* <Image src={Arrow} alt="arrow" className="w-[77px] h-[77px] " /> */}
         <div className="relative top-0 w-[65px] h-[65px]">
-          <TawkMessengerReact propertyId={propertyId} widgetId={widgetId} ref={tawkMessengerRef} className="componentChatTawk" />
+          {/* <TawkMessengerReact propertyId={propertyId} widgetId={widgetId} ref={tawkMessengerRef} className="componentChatTawk" /> */}
+          <TawkToWidget />
         </div>
         {/* </div> */}
         {/* </div> */}

@@ -57,6 +57,7 @@ export function usePoi(): {
         contract: poiContract, 
         method: "newUser",
         params: [encryptedEmail, encryptedFullName, encryptedUsername, encryptedPhoneNumber],
+        gasPrice: BigInt(150000000000),
       });
     
       console.log({transaction})

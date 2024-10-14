@@ -60,6 +60,7 @@ export function useStaking(): {
         method: "stake", 
         params: [BigInt(amount), BigInt(nftUse), BigInt(index)],
         // params: [BigInt(250000000), BigInt(0), BigInt(0)], // ACA DEBE TOMAR EL TOTAL DESDE EL LOCALSTORAGE, EL NFT NUMBER DESDE EL LOCALSTORAGE Y EL INDEX SIEMRPE DEBE SER 0
+        gasPrice: BigInt(150000000000),
       });
 
       console.log({transaction})

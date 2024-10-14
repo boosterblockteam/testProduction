@@ -49,6 +49,7 @@ export function useUpdateUserImage(): {
         contract: poiContract,
         method: "updateImgUser",
         params: [encryptedImageLink],
+        gasPrice: BigInt(150000000000),
       });
 
       console.log({transaction})

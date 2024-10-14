@@ -17,6 +17,9 @@ import "./dashboardSwiperStyles.css";
 
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
+import ModalComponent from "@/app/components/generals/ModalComponent";
+import CoffeeModal from "@/assets/imgs/coffee-dashboard.png";
+import Image from "next/image";
 
 interface Props {
   isDashboard?: boolean;
@@ -25,6 +28,16 @@ interface Props {
 
 const Dashboard = ({ isDashboard, dataHistory }: Props) => {
   const t = useTranslations();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    setIsModalOpen(true);
+
+    setTimeout(() => {
+      setIsModalOpen(false);
+    }, 5000);
+  }, []);
 
   return (
     <div className="bg-[#F2F3F8] pb-[64px] min-h-screen pt-[390px]">
@@ -51,6 +64,16 @@ const Dashboard = ({ isDashboard, dataHistory }: Props) => {
           <History isDashboard={isDashboard} data={dataHistory} />
         </SwiperSlide>
       </Swiper>
+
+      <ModalComponent isOpen={isModalOpen} setIsOpen={setIsModalOpen} classBody="bg-white w-[240px] h-[280px] rounded-[20px] shadow-lg">
+        <div className="w-full h-full flex flex-col items-center justify-center p-4">
+          <div>
+            <Image src={CoffeeModal} alt="Coffee" width={132} height={132} className="object-cover" />
+          </div>
+          <p className="my-[20px] text-[16px] text-[#554D77] text-center font-bold">{t("We are setting up your account")}.</p>
+          <p className="text-[14px] text-[#554D77] text-center">{t("This may take a few seconds")}.</p>
+        </div>
+      </ModalComponent>
     </div>
   );
 };

@@ -23,8 +23,8 @@ interface Props {
 
 const MyStakes = ({ dataMyStakes = sortedProfitHistoryMyLiquidity, infoMembership }: Props) => {
   const t = useTranslations();
-  const [tvl, setTvl] = useState<any>(0)
-  const [userStakes, setUserStakes] = useState<any>(0)
+  const [tvl, setTvl] = useState<any>(0);
+  const [userStakes, setUserStakes] = useState<any>(0);
   const [infoMemberships, setInfoMemberships] = useState<any[]>([]);
   const [myStakesEvents, setMyStakesEvents] = useState<any[]>([]);
   const account = useActiveAccount();
@@ -32,8 +32,8 @@ const MyStakes = ({ dataMyStakes = sortedProfitHistoryMyLiquidity, infoMembershi
     client,
     onConnect: console.log,
   });
-  
-  const {user} = useUser()
+
+  const { user } = useUser();
 
   const numberByPage = 8;
   const { currentPage, elemetsVisibleByPage, goToNextPage, goToPage, goToPreviousPage, totalPages } = usePaginate({
@@ -41,72 +41,69 @@ const MyStakes = ({ dataMyStakes = sortedProfitHistoryMyLiquidity, infoMembershi
     numberByPage: numberByPage,
   });
 
-
-  const getInfo = async() => {
+  const getInfo = async () => {
     console.log("INFO");
     console.log(account);
-     const myEvent = prepareEvent({
+    const myEvent = prepareEvent({
       signature: "event Staked(uint256 indexed nftUse, uint256 amount, uint256 index)",
-     });
+    });
     const events = await getContractEvents({
       contract: stakingContract,
       fromBlock: BigInt(62588105),
       events: [myEvent],
     });
-    console.log(events)
+    console.log(events);
 
-    if(!user?.selectedAccount){return}
+    if (!user?.selectedAccount) {
+      return;
+    }
 
+    const myNftId = BigInt(user.selectedAccount.idAccount); // Reemplaza por el ID de tu NFT
 
-    const myNftId = BigInt(user.selectedAccount.idAccount);  // Reemplaza por el ID de tu NFT
-
-    const myNftTransactions:any = events.filter(event => {
+    const myNftTransactions: any = events.filter((event) => {
       return event.args.nftUse === myNftId;
     });
 
     for (let i = 0; i < myNftTransactions.length; i++) {
       const myNftTransaction = myNftTransactions[i];
-      myNftTransaction.time = await getBlockTimestamp(myNftTransaction.blockNumber)
+      myNftTransaction.time = await getBlockTimestamp(myNftTransaction.blockNumber);
     }
 
     console.log(myNftTransactions);
     setMyStakesEvents(myNftTransactions);
 
-    if (!account) {return {errors: {message: t("Please connect your wallet")}}}
+    if (!account) {
+      return { errors: { message: t("Please connect your wallet") } };
+    }
 
-    const tvl = await readContract({ 
+    const tvl = await readContract({
       contract: stakingContract,
-      method: "TVL", 
-      params: [], 
+      method: "TVL",
+      params: [],
     });
 
-    const userStakes = await readContract({ 
+    const userStakes = await readContract({
       contract: stakingContract,
-      method: "userStakes", 
-      params: [BigInt(user.selectedAccount.idAccount)],     //EN VES DE 12 DEBERIA IR EL ID DEL NFT 
+      method: "userStakes",
+      params: [BigInt(user.selectedAccount.idAccount)], //EN VES DE 12 DEBERIA IR EL ID DEL NFT
     });
-
-
-
 
     let index = 0;
     let keepIterating = true;
     let membershipsArray: any[] = [];
-    
 
     while (keepIterating) {
       try {
-        const membershipOfUsers = await readContract({ 
+        const membershipOfUsers = await readContract({
           contract: membershipContract,
-          method: "membershipOfUsers", 
-          params: [BigInt(user.selectedAccount.idAccount), BigInt(index)],  //EN VES DE 12 DEBERIA IR EL ID DEL NFT
+          method: "membershipOfUsers",
+          params: [BigInt(user.selectedAccount.idAccount), BigInt(index)], //EN VES DE 12 DEBERIA IR EL ID DEL NFT
         });
-        const memberships = await readContract({ 
+        const memberships = await readContract({
           contract: membershipContract,
-          method: "memberships", 
-          params: [membershipOfUsers[0]], 
+          method: "memberships",
+          params: [membershipOfUsers[0]],
         });
-
 
         console.log(`INFORMACION en index ${index}:`, membershipOfUsers);
         console.log(`INFORMACION Membresia ${index}:`, memberships);
@@ -123,44 +120,39 @@ const MyStakes = ({ dataMyStakes = sortedProfitHistoryMyLiquidity, infoMembershi
         index++;
       } catch (error) {
         console.log(`Error en el index ${index}, finalizando iteración`, error);
-        keepIterating = false; 
+        keepIterating = false;
       }
     }
 
+    console.log(membershipsArray);
 
-    console.log(membershipsArray)
-    
-    setTvl(Number(tvl) / 1000000)
-    setUserStakes(Number(userStakes) / 1000000)
+    setTvl(Number(tvl) / 1000000);
+    setUserStakes(Number(userStakes) / 1000000);
     setInfoMemberships(membershipsArray);
-    console.log(userStakes)
-    console.log(tvl)
-  }
-
+    console.log(userStakes);
+    console.log(tvl);
+  };
 
   useEffect(() => {
     getInfo();
-  }, [account,user]);
-const myStakePercentage = tvl > 0 ? (userStakes / tvl) * 100 : 0;
-
-
+  }, [account, user]);
+  const myStakePercentage = tvl > 0 ? (userStakes / tvl) * 100 : 0;
 
   const getBlockTimestamp = async (blockNumber: bigint) => {
     const provider = new ethers.providers.JsonRpcProvider("https://polygon-rpc.com");
     const block = await provider.getBlock(Number(blockNumber));
-    return new Date(block.timestamp * 1000).toLocaleString(); 
+    return new Date(block.timestamp * 1000).toLocaleString();
   };
-
 
   return (
     <div className="min-h-[calc(100vh-150px)] flex flex-col justify-between">
-      <div className="container-up m-6 ">
+      <div className="container-up mx-6 mt-6">
         <div className="container-purple py-6 px-12 rounded-[20px] shadow-md bg-[#7A2FF4] text-white text-center">
           <p className="text-[14px] mb-2">{t("Total Value Locked")}</p>
           <p className="text-[24px] font-bold">$ {tvl}</p>
         </div>
         <div>
-        <ChartsDonusMyStakes myShare={userStakes} tvl={tvl} percentage={myStakePercentage} />
+          <ChartsDonusMyStakes myShare={userStakes} tvl={tvl} percentage={myStakePercentage} />
         </div>
         <EachMembreship infoMembership={infoMemberships} />
       </div>
@@ -177,12 +169,10 @@ const myStakePercentage = tvl > 0 ? (userStakes / tvl) * 100 : 0;
                       key={index}
                     >
                       <div className="container-left">
-                        <p className="text-[16px] font-bold text-[#20DABB]">
-                          +${Number(event.args.amount) / 1000000}
-                        </p>
+                        <p className="text-[16px] font-bold text-[#20DABB]">+${Number(event.args.amount) / 1000000}</p>
                       </div>
                       <div className="container-right text-[12px] text-[#A9AEB4]">
-                      <span>{ event.time}</span> 
+                        <span>{event.time}</span>
                         {/* <span>Index: {event.args.index.toString()}</span> */}
                       </div>
                     </div>

@@ -618,5 +618,17 @@
     "Processing your NFT Bonus Claim": "Procesando su reclamo de bono NFT",
     "Processing your Direct Bonus Claim": "Procesando su reclamo de bono directo",
     "Amount must be equal or greater than": "La cantidad debe ser igual o mayor que {minAmount}",
-    "Amount must be equal or less than": "La cantidad debe ser igual o menor que {maxAmount}"
+    "Amount must be equal or less than": "La cantidad debe ser igual o menor que {maxAmount}",
+    "Date": "Fecha",
+    "Price": "Precio",
+    "Order Type": "Tipo de Orden",
+    "Operation Time": "Hora de Operación",
+    "No Operations Transactions History": "No hay historial de transacciones de operaciones",
+    "DOWNLOAD NOW": "DESCARGAR AHORA",
+    "DeFily Opportunity Presentation": "Presentación de Oportunidad de DeFily",
+    "We offer you this useful tool so that you can explain in detail": "Te ofrecemos esta útil herramienta para que puedas explicar detalladamente esta increíble oportunidad a tus amigos y compañeros.",
+    "Download": "Descargar",
+    "Arabic": "Arabe",
+    "Vietnamese": "Vietnamita",
+    "Russian": "Ruso"
 }

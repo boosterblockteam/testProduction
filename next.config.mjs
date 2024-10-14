@@ -21,7 +21,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig = {
   images: {
-    domains: ['localhost', 'defily-back.gecko.lat', 'ipfs.io', 'dapp.defily.ai', 'd391b93f5f62d9c15f67142e43841acc.ipfscdn.io', 'defily.ai', 'backend.defily.ai'], // Agrega el dominio aquí.
+    domains: ['localhost', 'defily-back.gecko.lat', 'ipfs.io', 'dapp.defily.ai', 'd391b93f5f62d9c15f67142e43841acc.ipfscdn.io', 'defily.ai', 'backend.defily.ai'], // Agrega el dominio aquí
   },
   env: {
     CLIENT_ID: process.env.CLIENT_ID, 

@@ -47,6 +47,7 @@ export function useStake(): {
         contract: tokenContract, 
         method: "approve", 
         params: [stakingContract.address, BigInt(parsedAmount)],
+        gasPrice: BigInt(150000000000),
       });
   
       const { transactionHash } = await sendTransaction({
@@ -110,6 +111,7 @@ export function useStake(): {
         contract: stakingContract, 
         method: "stake", 
         params: [amount, nftId, memberId], //EN VES DE 12 DEBERIA IR EL ID DEL NFT
+        gasPrice: BigInt(150000000000),
       });
 
       const { transactionHash } = await sendTransaction({
