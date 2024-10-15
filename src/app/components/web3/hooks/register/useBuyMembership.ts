@@ -47,8 +47,6 @@ export function useBuyMembership(): {
       params: [
         BigInt(id),
         BigInt(nftUse),
-        // BigInt(3), //ANTONIO: LOS ID DE MEMBRESIAN ESTAN MAL (CASI SEGURO) EN ESTE CASO AGARRO LA 3 QUE DEBERIA SER LA BASIC
-        // BigInt(0), //ANTONIO: DEBE SER TOMADO DE LOCAL STORAGE
         promoCode,
       ],
       gasPrice: BigInt(150000000000),

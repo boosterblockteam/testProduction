@@ -18,18 +18,18 @@ export class MyTeamService {
     return response.data;
   }
 
-  async getMyTeam(idAccount: number): Promise<{ usersReferral: UsersReferral }> {
-    const response = await this.httpRequest.get<{ usersReferral: UsersReferral }>(`${this.endpoint}/${idAccount}`);
+  async getMyTeam(idAccount: number, mainWallet: string): Promise<{ usersReferral: UsersReferral }> {
+    const response = await this.httpRequest.get<{ usersReferral: UsersReferral }>(`${this.endpoint}/${idAccount}/${mainWallet}`);
     return response.data;
   }
 
-  async getLastLeft(idAccount: number): Promise<{ usersReferral: UsersReferral }> {
-    const response = await this.httpRequest.get<{ usersReferral: UsersReferral }>(`${this.endpoint}/last-left/${idAccount}`);
+  async getLastLeft(idAccount: number, mainWallet: string): Promise<{ usersReferral: UsersReferral }> {
+    const response = await this.httpRequest.get<{ usersReferral: UsersReferral }>(`${this.endpoint}/last-left/${idAccount}/${mainWallet}`);
     return response.data;
   }
 
-  async getLastRight(idAccount: number): Promise<{ usersReferral: UsersReferral }> {
-    const response = await this.httpRequest.get<{ usersReferral: UsersReferral }>(`${this.endpoint}/last-right/${idAccount}`);
+  async getLastRight(idAccount: number, mainWallet: string): Promise<{ usersReferral: UsersReferral }> {
+    const response = await this.httpRequest.get<{ usersReferral: UsersReferral }>(`${this.endpoint}/last-right/${idAccount}/${mainWallet}`);
     return response.data;
   }
 

@@ -26,6 +26,7 @@ import { useWalletDetailsModal } from "thirdweb/react";
 import { client } from "@/app/components/web3/client";
 import Navbar from "@/app/components/generals/Navbar";
 import { connectButtonOptions } from "@/app/components/web3/components/ConnectWalletButton";
+import { ServiceProvider } from "@/app/components/providers/service.provider";
 
 const TotalPayment = () => {
   const t = useTranslations();
@@ -72,9 +73,24 @@ const TotalPayment = () => {
     buyMembershipFromStorage,
     approveStaking,
     stakingFromStorage,
+    loadStakingParams,
   } = useRegister();
 
   useEffect(() => {
+    loadTotalValues();
+  }, []);
+
+  useEffect(() => {
+    const { accountParams, membershipParams, stakingParams } = getRegisterFormsData();
+
+    setHasToRegister(!poi);
+    setHastoBuyNFT(Boolean(accountParams));
+    setHasToBuyMembership(Boolean(membershipParams));
+    setHasToStake(Boolean(stakingParams));
+  }, [poi]);
+
+  const loadTotalValues = async () => {
+    const { membershipService } = ServiceProvider.getInstance().getServices();
     const { membershipParams, stakingParams } = getRegisterFormsData();
 
     let membershipPrice = 0;
@@ -83,8 +99,21 @@ const TotalPayment = () => {
     let discount = 0;
 
     if (membershipParams) {
-      setMemberValue(membershipParams.price);
-      membershipPrice = membershipParams.price;
+      if (stakingParams) {
+        const { membership } = await membershipService.getMembership(membershipParams.id);
+        console.log({
+          membership,
+          amount: stakingParams.amount,
+          fee: membership.fee,
+        })
+        const fee = (stakingParams.amount * membership.fee) / 100;
+
+        setMemberValue(fee);
+        membershipPrice = fee;
+      } else {
+        setMemberValue(membershipParams.price);
+        membershipPrice = membershipParams.price;
+      }
 
       if (membershipParams.percentage) {
         percentage = membershipParams.percentage;
@@ -101,16 +130,7 @@ const TotalPayment = () => {
     const total = 30 + membershipPrice - discount + stakingAmount;
 
     setTotalValue(total);
-  }, []);
-
-  useEffect(() => {
-    const { accountParams, membershipParams, stakingParams } = getRegisterFormsData();
-
-    setHasToRegister(!poi);
-    setHastoBuyNFT(Boolean(accountParams));
-    setHasToBuyMembership(Boolean(membershipParams));
-    setHasToStake(Boolean(stakingParams));
-  }, [poi]);
+  }
 
   const buttonProceedWithPayment = async () => {
     setIsModalOpen(true);
@@ -124,7 +144,8 @@ const TotalPayment = () => {
     setIsStaked(false);
 
     try {
-      const { membershipParams, stakingParams } = getRegisterFormsData();
+    const { membershipService } = ServiceProvider.getInstance().getServices();
+    const { membershipParams, stakingParams } = getRegisterFormsData();
 
       if (poi === null) {
         const { errors: errorsCreatePoi } = await createPoiFromStorage();
@@ -177,6 +198,15 @@ const TotalPayment = () => {
       }
 
       if (stakingParams) {
+        let fee = 0;
+        if (membershipParams) {
+          const { membership } = await membershipService.getMembership(membershipParams.id);
+          fee = (stakingParams.amount * membership.fee) / 100;
+
+          stakingParams.amount = stakingParams.amount + fee;
+
+          localStorage.setItem("stakingParams", JSON.stringify(stakingParams))
+        }
         const { errors: errorsApproveStaking } = await approveStaking(stakingParams.amount);
 
         if (errorsApproveStaking) {

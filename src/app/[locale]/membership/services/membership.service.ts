@@ -17,4 +17,9 @@ export class MembershipService {
     return response.data;
   }
 
+  async getMembership(id: number): Promise<{ membership: Membership }> {
+    const response = await this.httpRequest.get<{ membership: Membership }>(`${this.endpoint}/${id}`);
+    return response.data;
+  }
+
 }

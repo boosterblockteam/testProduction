@@ -40,7 +40,7 @@ const Countdown = ({ nowDate, endDate, bgColor, classname, classDate }: Props) =
 
         const newNow = addSeconds(prevLeftTime.now, 1);
 
-        const { days, hours, minutes, seconds } = getTimeDifference(new Date(newNow), endDate);
+        const { days, hours, minutes, seconds } = getTimeDifference(newNow, endDate);
 
         if (days === 0 && hours === 0 && minutes === 0 && seconds === 0) {
           clearInterval(incrementSecondInterval);
@@ -60,25 +60,6 @@ const Countdown = ({ nowDate, endDate, bgColor, classname, classDate }: Props) =
     
     return () => clearInterval(incrementSecondInterval);
   }, [isLoading]);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const distance = dateEnd.getTime() - new Date().getTime();
-  //     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  //     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  //     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  //     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-  //     if (distance < 0) {
-  //       clearInterval(interval);
-  //     }
-  //     setDays(days);
-  //     setHours(hours);
-  //     setMinutes(minutes);
-  //     setSeconds(seconds);
-  //     // console.log({ days, hours, minutes, seconds });
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, [dateEnd]);
 
   return (
     <div

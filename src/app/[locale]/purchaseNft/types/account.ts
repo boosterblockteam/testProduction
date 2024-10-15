@@ -1,5 +1,6 @@
 export type Account = {
   uuid: string;
+  wallet: string;
   idAccount: number;
   accountName: string;
   cid: string;
