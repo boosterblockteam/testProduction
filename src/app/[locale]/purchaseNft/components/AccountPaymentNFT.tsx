@@ -189,7 +189,10 @@ const AccountPaymentNFT = ({ setStepNft, selectedNFT, setSelectedNFT, listNftBuy
                   <div className="w-[100%] mx-auto">
                     <Image src={item.link} alt="NFT Image" width={84} height={84} className="mx-auto rounded-lg w-full" />
                   </div>
-                  <p className="text-[12px] text-[#A9AEB4] mt-1">$ {item.price}</p>
+                  <div className="flex justify-between items-center w-full">
+                    <p className="text-[11px] text-white font-bold mt-1">#{index + 1}</p>
+                    <p className="text-[11px] text-[#A9AEB4]">${item.price}</p>
+                  </div>
                 </div>
               ))}
             </>

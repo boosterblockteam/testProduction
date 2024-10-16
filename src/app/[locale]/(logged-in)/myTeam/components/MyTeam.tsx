@@ -31,8 +31,6 @@ import { ServiceProvider } from "@/app/components/providers/service.provider";
 import { useUser } from "@/app/components/web3/context/UserProvider";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { formatCurrencyInteger } from "@/utils/formatCurrency";
-import { getTimeDifference } from "@/app/[locale]/(logged-in)/myTeam/utils/get-time-difference";
-import { addSeconds } from "date-fns";
 
 // const testNFTId: number | null = 0; // test: testNFTId
 const testNFTId: number | null = null; // test: testNFTId
@@ -69,7 +67,7 @@ export type Season = {
   start: Date;
   end: Date;
   now: Date;
-}
+};
 
 const MyTeam = ({ type, infoUserLevel }) => {
   const t = useTranslations();
@@ -120,7 +118,6 @@ const MyTeam = ({ type, infoUserLevel }) => {
       } else {
         setSeeMoreButtonHome(user?.selectedAccount?.idAccount !== usersReferral?.NFTId);
       }
-
     }
   }, [usersReferral]);
 
@@ -210,12 +207,10 @@ const MyTeam = ({ type, infoUserLevel }) => {
 
       const myTeamResponse = await myTeamService.getMyTeam(testNFTId, mainWallet); // test: usar la direccion de irving
       setUsersReferral(myTeamResponse.usersReferral);
-
     } else if (user?.selectedAccount?.idAccount !== null && user?.selectedAccount?.idAccount !== undefined) {
 
       const myTeamResponse = await myTeamService.getMyTeam(user.selectedAccount.idAccount, user.selectedAccount.wallet);
       setUsersReferral(myTeamResponse.usersReferral);
-
     }
   }
 
@@ -253,7 +248,9 @@ const MyTeam = ({ type, infoUserLevel }) => {
       {search === "search" ? <HeaderPages text={t("Search")} linkRouter="/myTeam" /> : <Navbar text={t("My Team")} />}
 
       <div className={`${search === "search" ? "px-6" : "flex  items-center justify-between"}`}>
-        <Link href={"/myTeam?type=search"} className={`relative ${search === "search" ? "w-full" : "w-2/6"}`} onClick={buttomHandleSearch}>
+        {/* NO BORRAR ESTA LÍNEA, ES MOMENTÁNEO QUE SEARCH ESTÉ DESHABILITADO */}
+        {/* <Link href={"/myTeam?type=search"} className={`relative ${search === "search" ? "w-full" : "w-2/6"}`} onClick={buttomHandleSearch}> */}
+        <div className={`relative ${search === "search" ? "w-full" : "w-2/6"}`}>
           <input
             className={`pr-2 pl-8 py-3 rounded-[10px] bg-[#ffffff14] text-white text-[10px] font-bold focus:outline-none w-full `}
             type="text"
@@ -262,7 +259,8 @@ const MyTeam = ({ type, infoUserLevel }) => {
             value={searchInput}
           />
           <Image src={SearchIcon} alt="search" width={18} height={18} className="absolute top-1/2 left-2 -translate-y-1/2" />
-        </Link>
+        </div>
+        {/* </Link> */}
 
         {search === "search" ? null : (
           <>
@@ -469,7 +467,10 @@ function ReferrerParent({ user, onClickButtonUserCard }: { user: UsersReferral; 
               classname="flex justify-center items-center py-[2px] rounded-[6px] bg-[#554D77] w-full mx-auto space-x-4"
             />
             <button
-              onClick={() => buttonSeeMoreCard(user)}
+              disabled={true}
+              onClick={() => {
+                // buttonSeeMoreCard(user)
+              }}
               className="text-[8px] bgGradientPurpleMedium font-bold hover:bg-[#7a2ff4] text-white rounded-[6px] w-full py-1 px-2 mt-2"
             >
               {t("See More")}
@@ -512,7 +513,10 @@ function PrimaryReferrals({
   return (
     <>
       <div className="flex flex-col items-center justify-center text-[8px] text-white">
-        <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => (user?.NFTId !== null && user?.NFTId !== undefined) && onClickButtonUserCard(user.NFTId)}>
+        <div
+          className="bg-[#ffffff14] w-full rounded-[10px]"
+          onClick={() => user?.NFTId !== null && user?.NFTId !== undefined && onClickButtonUserCard(user.NFTId)}
+        >
           <div className="rounded-t-[10px] relative h-[20px] w-full" style={user ? { backgroundColor: getRankingAccountColor(user.lvlAccount) } : {}}>
             <div className="w-[32px] h-[32px] absolute -top-1/2 right-1/2 transform translate-x-1/2 translate-y-1/2">
               {user ? (
@@ -568,7 +572,10 @@ function PrimaryReferrals({
                     classname="flex justify-center items-center py-[2px] rounded-[6px] bg-[#554D77] w-full mx-auto space-x-4"
                   />
                   <button
-                    onClick={() => buttonSeeMoreCard(user)}
+                    disabled={true}
+                    onClick={() => {
+                      // buttonSeeMoreCard(user)
+                    }}
                     className="text-[8px] bgGradientPurpleMedium font-bold hover:bg-[#7a2ff4] text-white rounded-[6px] w-full py-1 px-2 mt-2"
                   >
                     {t("See More")}
@@ -647,7 +654,10 @@ function SecondaryReferrals({
 
   return (
     <div className="flex flex-col items-center justify-center text-[8px]">
-      <div className="bg-[#ffffff14] w-full rounded-[10px]" onClick={() => (user?.NFTId !== null && user?.NFTId !== undefined) && onClickButtonUserCard(user.NFTId)}>
+      <div
+        className="bg-[#ffffff14] w-full rounded-[10px]"
+        onClick={() => user?.NFTId !== null && user?.NFTId !== undefined && onClickButtonUserCard(user.NFTId)}
+      >
         <div
           className="rounded-t-[10px] relative h-[20px] w-full"
           style={{ backgroundColor: user && userParent ? getRankingAccountColor(userParent.lvlAccount) : "transparent" }}

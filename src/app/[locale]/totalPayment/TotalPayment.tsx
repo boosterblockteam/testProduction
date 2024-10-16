@@ -205,7 +205,6 @@ const TotalPayment = () => {
 
           stakingParams.amount = stakingParams.amount + fee;
 
-          localStorage.setItem("stakingParams", JSON.stringify(stakingParams))
         }
         const { errors: errorsApproveStaking } = await approveStaking(stakingParams.amount);
 

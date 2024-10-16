@@ -38,7 +38,7 @@ const CardDetailsHz = ({ infoUsers }) => {
             <TrianguloSVG fill={infoUsers.legSide === "LEFT" ? "#34BFA8" : "#03B051"} />
           </div>
         </div>
-        <div className="w-3/6 p-2 ps-8 flex flex-col justify-center items-start border-e border-solid border-[#A9AEB4]">
+        <div className="w-3/6 p-2 ps-8 flex flex-col justify-center items-start border-e border-solid border-[#ffffff1a]">
           <div className="p-1 rounded bg-[#ffffff1a] flex items-center">
             <span className="rounded border border-solid border-[#ffffff1a] text-[8px] text-[#A9AEB4] font-bold py-[2px] px-[6px]">
               {infoUsers.id}

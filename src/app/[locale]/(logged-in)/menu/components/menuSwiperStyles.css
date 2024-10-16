@@ -25,5 +25,5 @@
 
 .swiper-pagination{
     --swiper-pagination-color: white;
-    --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.25);
+    /* --swiper-pagination-bullet-inactive-color: rgba(255, 255, 255, 0.25); */
 }

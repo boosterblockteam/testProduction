@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RewardPoolIcon from "@/assets/icons/RewardPoolIcon.svg";
 import TransactionsIcon from "@/assets/icons/transationsIcon.svg";
 import ClaimIcon from "@/assets/icons/claimIconMenu.svg";
@@ -54,7 +54,7 @@ const DraggableMenu: React.FC = () => {
     { id: 8, title: t("Transactions"), icon: TransactionsIcon, link: "", isActive: true },
     { id: 9, title: t("Governance"), icon: GovernanceIcon, link: "", isActive: true },
     { id: 10, title: t("Operations"), icon: OperationsIcon, link: "", isActive: true },
-    { id: 11, title: t("Marketing"), icon: MarketingIcon, link: "", isActive: true },
+    { id: 11, title: t("Marketing"), icon: MarketingIcon, link: "marketing", isActive: true },
     { id: 12, title: t("Tools"), icon: ToolsIcon, link: "", isActive: true },
     { id: 13, title: t("Seasons"), icon: SeasonsIcon, link: "", isActive: true },
     { id: 14, title: t("Charity"), icon: CharityIcon, link: "", isActive: true },

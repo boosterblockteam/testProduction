@@ -38,10 +38,10 @@ const Profile = () => {
           className="mySwiper rounded-[16px] h-[455px] flex items-center"
         >
           <SwiperSlide>
-            <DataPersonalUser />
+            <DataRedesAndCurrentNFT />
           </SwiperSlide>
           <SwiperSlide>
-            <DataRedesAndCurrentNFT />
+            <DataPersonalUser />
           </SwiperSlide>
           <SwiperSlide>
             <DataBioWallet />

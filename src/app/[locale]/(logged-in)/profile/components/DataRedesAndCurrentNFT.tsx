@@ -197,7 +197,7 @@ const DataRedesAndCurrentNFT = () => {
     <div className="flex flex-col items-center justify-between">
       <div className="pt-2 w-full">
         <p className="text-[16px] font-bold text-[#1E0E39] text-center mb-4">
-          {t("Current NFT")}: <span className="font-normal">DeFilyMaster</span>
+          {t("Current NFT")}: <span className="font-normal">{user.selectedAccount?.accountName || ""}</span>
         </p>
         <div className="container-option w-full flex justify-center gap-x-2 my-4 ">
           <span

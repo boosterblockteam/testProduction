@@ -23,11 +23,14 @@
   .imgProfile {
     width: 1.75em;
     height: 1.7em;
+    object-fit: cover;
 
     img{
       border-radius: 50%;
       height: 100%;
       width: 100%;
+      object-fit: cover;
+
     }
   }
 

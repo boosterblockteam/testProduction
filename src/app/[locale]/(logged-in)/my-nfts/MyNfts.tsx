@@ -11,39 +11,42 @@ import { readContract } from "thirdweb";
 import { nftContract } from "../../../components/web3/contracts/nft.contract";
 import { membershipContract } from "@/app/components/web3/contracts/membership.contract";
 
-
 const MyNfts = ({ dataInfoUserNfts }) => {
   const t = useTranslations();
   const router = useRouter();
   const { user } = useUser();
 
-  const [infoNfts, setInfoNfts] = useState<any>([])
+  const [infoNfts, setInfoNfts] = useState<any>([]);
 
   const buttonCreateNewNFT = () => {
     router.push("/my-nfts/buy-nft");
   };
 
-  const getSponsorName = async(id: any) =>{
-    if(!user.selectedAccount?.idAccount){return}
-    const rewardsNFTs = await readContract({ 
+  const getSponsorName = async (id: any) => {
+    if (!user.selectedAccount?.idAccount) {
+      return;
+    }
+    const rewardsNFTs = await readContract({
       contract: nftContract,
       method: "accountInfo",
       params: [id], //ID DE CUENTA
     });
 
-    return rewardsNFTs[1]
-  }
-  const getMembershipsOfUser = async(id: any) =>{
-    if(!user.selectedAccount?.idAccount){return}
-    const membershipOfUsers = await readContract({ 
+    return rewardsNFTs[1];
+  };
+  const getMembershipsOfUser = async (id: any) => {
+    if (!user.selectedAccount?.idAccount) {
+      return;
+    }
+    const membershipOfUsers = await readContract({
       contract: membershipContract,
-      method: "membershipOfUsers", 
-      params: [BigInt(user.selectedAccount.idAccount), BigInt(0)],  //EN VES DE 12 DEBERIA IR EL ID DEL NFT
+      method: "membershipOfUsers",
+      params: [BigInt(user.selectedAccount.idAccount), BigInt(0)], //EN VES DE 12 DEBERIA IR EL ID DEL NFT
     });
-    console.log(membershipOfUsers)
+    console.log(membershipOfUsers);
 
-    return membershipOfUsers.length
-  }
+    return membershipOfUsers.length;
+  };
 
   useEffect(() => {
     console.log(user);
@@ -58,29 +61,29 @@ const MyNfts = ({ dataInfoUserNfts }) => {
           const membresshipZero = await getMembershipsOfUser(account.sponsor);
           const baseURL = process.env.APP_URL;
           const referralLink = `${baseURL}/?sponsor=${account.idAccount || 0}&legside=${user.selectedAccount?.legSide || "a"}`;
+          console.log({ accounts: user.accounts });
           return {
-            imageNft:`ipfs://${account.cid}/${account.idAccount}.png`, //account.image,
+            // imageNft: `ipfs://${account.cid}/${account.idAccount}.png`, //account.image,
+            imageNft: account.image,
             nameAccount: account.accountName,
             levelCurrent: "BASE",
             sponsorNFTId: account.sponsor,
             sponsorNFTName: sponsorName || "Unknown", // Espera el resultado de la promesa
-            referralLink:referralLink,
+            referralLink: referralLink,
             address: user.address,
-            idAccount: account.idAccount
+            idAccount: account.idAccount,
           };
         });
 
         // Resuelve todas las promesas y actualiza el estado
         const resolvedInfoNft = await Promise.all(promises);
-        console.log(resolvedInfoNft)
+        console.log(resolvedInfoNft);
         setInfoNfts(resolvedInfoNft);
       }
     };
 
     fetchData();
   }, [user]);
-
-
 
   return (
     <div className="bg-gradient-to-t from-[#0E0E33] to-[#39307B] flex flex-col justify-between min-h-screen pt-6 pb-[88px] px-6">

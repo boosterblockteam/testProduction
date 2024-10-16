@@ -18,9 +18,11 @@ import { formatCurrencyInteger } from "@/utils/formatCurrency";
 import IconCloseSVG from "@/assets/icons/closeHistory.svg";
 import { useStake } from "@/app/components/web3/hooks/useStake";
 import { useUser } from "@/app/components/web3/context/UserProvider";
+import { ServiceProvider } from "@/app/components/providers/service.provider";
 
 type MembershipArray = {
   id: number;
+  membershipId: number;
   title: string;
   totalStaked: bigint;
   minInvestment: bigint;
@@ -45,6 +47,7 @@ const Stake = () => {
   const [minMax, setMinMax] = useState<{ min: bigint; max: bigint }>({ min: BigInt(0), max: BigInt(0) });
   const [totalStaked, setTotalStaked] = useState<any>(0); // Guardar el total staked de la membresía seleccionada
   const [memberId, setMemberId] = useState<any>();
+  const [membershipId, setMembershipId] = useState<number>(0);
   const [avalaibleStake, setAvalaibleStake] = useState<any>();
   const [isApprovedStaking, setIsApprovedStaking] = useState(false);
   const [isStaked, setIsStaked] = useState(false);
@@ -60,6 +63,7 @@ const Stake = () => {
   useClickOutside("#select-plan", () => SetIsOpenSelectPlan(!selectedPlan));
 
   const buttonApproveContract = async () => {
+    const { membershipService } = ServiceProvider.getInstance().getServices();
     setError("");
 
     const minAmount = Number(minMax.min) / 1_000_000;
@@ -82,7 +86,12 @@ const Stake = () => {
 
     setIsStaked(false);
 
-    const { errors: errorsApproveStaking } = await approveStaking(Number(amount));
+    console.log({membershipId, memberId})
+
+    const { membership } = await membershipService.getMembership(membershipId);
+    const fee = (Number(amount) * membership.fee) / 100;
+
+    const { errors: errorsApproveStaking } = await approveStaking(Number(amount) + fee);
     if (errorsApproveStaking) {
       console.log(errorsApproveStaking);
       setIsProcessing(false);
@@ -109,6 +118,7 @@ const Stake = () => {
 
     await new Promise((resolve) => setTimeout(resolve, 5000));
     setIsModalOpen(false);
+    setAmount("")
   };
 
   const getInfo = async () => {
@@ -140,6 +150,7 @@ const Stake = () => {
 
         membershipsArray.push({
           id: index,
+          membershipId: Number(membershipOfUsers[0]),
           title: memberships[0],
           totalStaked: membershipOfUsers[3],
           minInvestment: memberships[7],
@@ -163,6 +174,7 @@ const Stake = () => {
   const handleSelectPlan = (selected: MembershipArray) => {
     console.log(selected);
     setMemberId(selected.id);
+    setMembershipId(selected.membershipId);
     setSelectedPlan(selected.title);
     setTotalStaked(selected.totalStaked);
     setMinMax({ min: selected.minInvestment, max: selected.maxInvestment });

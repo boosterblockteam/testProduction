@@ -18,9 +18,9 @@ interface Props {
 
 const Claim = ({ dataClaim }: Props) => {
   const t = useTranslations();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isDeclined, setIsDeclined] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isDeclined, setIsDeclined] = useState<boolean>(false);
   const [walletBalance, setWalletBalance] = useState<string>("10,000");
   const [currentProfit, setCurrentProfit] = useState<string>("8,000");
 

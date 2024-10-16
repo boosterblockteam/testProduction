@@ -32,11 +32,24 @@ const Dashboard = ({ isDashboard, dataHistory }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    setIsModalOpen(true);
+    // Verificar si el modal ya se ha mostrado antes
+    const hasModalBeenShown = localStorage.getItem("modalShown");
 
-    setTimeout(() => {
-      setIsModalOpen(false);
-    }, 5000);
+    if (!hasModalBeenShown) {
+      // Si no se ha mostrado, abrir el modal
+      setIsModalOpen(true);
+
+      // Marcar el modal como mostrado en localStorage
+      localStorage.setItem("modalShown", "true");
+
+      // Cerrar el modal después de 5 segundos
+      const timer = setTimeout(() => {
+        setIsModalOpen(false);
+      }, 5000);
+
+      // Limpiar el temporizador si el componente se desmonta
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (

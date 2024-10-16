@@ -17,6 +17,7 @@ import ModalComponent from "./ModalComponent";
 import RelojGif from "@/assets/imgs/reloj-de-bolsillo.gif";
 import IconCloseSVG from "@/assets/icons/closeHistory.svg";
 import { Div } from "../../../utils/countries";
+import { connectButtonOptions } from "../web3/components/ConnectWalletButton";
 
 type ListOptions = {
   title: string;
@@ -92,7 +93,10 @@ const Footer = () => {
       title: "Wallet",
       icon: <WalletIcon fill={search === "myLiquidity" ? "#7A2FF4" : "#A9AEB4"} />,
       isButton: true,
-      onClick: () => detailsModal.open({ client }),
+      onClick: () => detailsModal.open({
+        client,
+        ...connectButtonOptions,
+      }),
     },
     {
       title: "Profile",

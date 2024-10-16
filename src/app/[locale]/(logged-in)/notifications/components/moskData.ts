@@ -6,7 +6,7 @@ export interface MessagesNotifications {
     time: string;
   }
   
-  export const messagesNotifications = Array(30)
+  export const messagesNotifications = Array(0)
     .fill(null)
     .map((_, index) => {
       const today = new Date();

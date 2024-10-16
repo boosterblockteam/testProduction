@@ -34,7 +34,7 @@ const Card = ({ user }: any) => {
 
   const copyReferralLink = (linkReferral: string) => {
     navigator.clipboard.writeText(linkReferral);
-    console.log(linkReferral)
+    console.log(linkReferral);
     setIsModalOpenCopy(true);
 
     setTimeout(() => {
@@ -51,9 +51,8 @@ const Card = ({ user }: any) => {
       <div className="py-3 px-2 bg-[#ffffff1a] rounded-[10px] border border-solid border-[#ffffff1a]">
         <div className="flex justify-center items-center relative">
           <div className="w-[48px] h-[48px] rounded-[100px] border-[2px] border-solid border-[#ffffff1a] bg-cover ">
-            {/* <Image src={userModal.imageNft} alt="Image Nft" className="object-cover rounded-[100px] w-full h-full" /> */}
-            <img style={{borderRadius:"50px"}} src={user.imageNft} alt="" /> {/*PONER IMAGE LEADYS*/}
-
+            <Image src={`${user?.imageNft}`} alt="Image Nft" className="object-cover rounded-[100px] w-full h-full" width={48} height={48} />
+            {/* <img style={{borderRadius:"50px"}} src={user.imageNft} alt="" /> PONER IMAGE LEADYS */}
           </div>
           <div
             className="w-[32px] h-[32px] rounded-[100px] bg-gradient-to-t from-[#AD98FF] to-[#612DFE] flex justify-center items-center cursor-pointer"
@@ -108,7 +107,7 @@ const Card = ({ user }: any) => {
             <div>
               <div className="h-[112px] w-[112px] mx-auto rounded-[100px] border border-[#7A2FF4]">
                 {/* <Image src={userModal.imageNft} alt="Image Nft" className="object-cover rounded-[100px] w-full h-full" /> */}
-                <img style={{borderRadius:"50px"}} src={user.imageNft} alt="" />
+                <img style={{ borderRadius: "50px" }} src={user.imageNft} alt="" />
               </div>
 
               <h2 className="my-[10px] text-[16px] font-bold py-1 px-4 rounded-[20px] border border-solid border-[#7A2FF4]">
@@ -120,9 +119,7 @@ const Card = ({ user }: any) => {
               </div>
 
               <p className="mt-[10px] text-[14px] text-center text-[#1E0E39]">
-                {user.address
-                  ? `${user.address.substring(0, 6)}...${user.address.substring(user.address.length - 6)}`
-                  : ""}
+                {user.address ? `${user.address.substring(0, 6)}...${user.address.substring(user.address.length - 6)}` : ""}
               </p>
             </div>
 
