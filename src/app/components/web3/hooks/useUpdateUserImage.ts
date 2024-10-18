@@ -6,6 +6,7 @@ import { encryptHex } from "../utils/crypt";
 import { poiContract } from "../contracts/poi.contract";
 import { prepareContractCall, sendTransaction } from "thirdweb";
 import { waitForTransactionHash } from "../utils/waitForTransactionHash";
+import { mainGasPrice } from "../prices/gas-prices";
 
 export function useUpdateUserImage(): {
   updateUserImage: (imageLink: string) => Promise<{
@@ -49,7 +50,7 @@ export function useUpdateUserImage(): {
         contract: poiContract,
         method: "updateImgUser",
         params: [encryptedImageLink],
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
 
       console.log({transaction})

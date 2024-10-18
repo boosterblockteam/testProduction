@@ -6,6 +6,7 @@ import { CreatePoiValidationError, useValidatePoi } from "../validations/useVali
 import { useTranslations } from "next-intl";
 import { waitForTransactionHash } from "../../utils/waitForTransactionHash";
 import { CreatePoi } from "../../types/poi";
+import { mainGasPrice } from "../../prices/gas-prices";
 
 export function usePoi(): {
   createPoi: (params: CreatePoi) => Promise<{
@@ -57,7 +58,7 @@ export function usePoi(): {
         contract: poiContract, 
         method: "newUser",
         params: [encryptedEmail, encryptedFullName, encryptedUsername, encryptedPhoneNumber],
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
     
       console.log({transaction})

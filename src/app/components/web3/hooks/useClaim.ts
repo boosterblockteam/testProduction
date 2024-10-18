@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useActiveAccount } from "thirdweb/react";
 import { waitForTransactionHash } from "../utils/waitForTransactionHash";
 import { membershipContract } from "../contracts/membership.contract";
+import { mainGasPrice } from "../prices/gas-prices";
 
 export type ClaimError = {
   message: string
@@ -43,7 +44,7 @@ export function useClaim(): {
         contract: nftContract,
         method: "claimNftReward",
         params: [BigInt(user.selectedAccount.idAccount)], //ID DE CUENTA
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
 
       const { transactionHash } = await sendTransaction({
@@ -94,7 +95,7 @@ export function useClaim(): {
         contract: membershipContract,
         method: "claimMembershipReward",
         params: [BigInt(user.selectedAccount.idAccount)], //ID DE CUENTA
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
 
       const { transactionHash } = await sendTransaction({

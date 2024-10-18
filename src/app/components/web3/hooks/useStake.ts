@@ -5,6 +5,7 @@ import { stakingContract } from "../contracts/staking.contract";
 import { tokenContract } from "../contracts/token.contract";
 import { waitForTransactionHash } from "../utils/waitForTransactionHash";
 import { useUser } from "../context/UserProvider";
+import { mainGasPrice } from "../prices/gas-prices";
 
 export type StakeError = {
   message: string;
@@ -47,7 +48,7 @@ export function useStake(): {
         contract: tokenContract, 
         method: "approve", 
         params: [stakingContract.address, BigInt(parsedAmount)],
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
   
       const { transactionHash } = await sendTransaction({
@@ -111,7 +112,7 @@ export function useStake(): {
         contract: stakingContract, 
         method: "stake", 
         params: [amount, nftId, memberId], //EN VES DE 12 DEBERIA IR EL ID DEL NFT
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
 
       const { transactionHash } = await sendTransaction({

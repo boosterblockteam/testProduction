@@ -99,15 +99,14 @@ const TotalPayment = () => {
     let discount = 0;
 
     if (membershipParams) {
-      if (stakingParams) {
-        const { membership } = await membershipService.getMembership(membershipParams.id);
-        console.log({
-          membership,
-          amount: stakingParams.amount,
-          fee: membership.fee,
-        })
-        const fee = (stakingParams.amount * membership.fee) / 100;
+      const { membership } = await membershipService.getMembership(membershipParams.id);
+      let fee = 0;
 
+      if (stakingParams) {
+        fee = (stakingParams.amount * membership.fee) / 100;
+      } 
+      
+      if (fee > 0) {
         setMemberValue(fee);
         membershipPrice = fee;
       } else {
@@ -144,8 +143,8 @@ const TotalPayment = () => {
     setIsStaked(false);
 
     try {
-    const { membershipService } = ServiceProvider.getInstance().getServices();
-    const { membershipParams, stakingParams } = getRegisterFormsData();
+      const { membershipService } = ServiceProvider.getInstance().getServices();
+      const { membershipParams, stakingParams } = getRegisterFormsData();
 
       if (poi === null) {
         const { errors: errorsCreatePoi } = await createPoiFromStorage();
@@ -202,9 +201,10 @@ const TotalPayment = () => {
         if (membershipParams) {
           const { membership } = await membershipService.getMembership(membershipParams.id);
           fee = (stakingParams.amount * membership.fee) / 100;
-
-          stakingParams.amount = stakingParams.amount + fee;
-
+          
+          if (fee > 0) {
+            stakingParams.amount = stakingParams.amount + fee;
+          }
         }
         const { errors: errorsApproveStaking } = await approveStaking(stakingParams.amount);
 

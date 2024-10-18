@@ -4,6 +4,7 @@ import { membershipContract } from "../../contracts/membership.contract";
 import { useTranslations } from "next-intl";
 import { PurchaseMembershipValidationError } from "../validations/useValidatePurchaseMembership";
 import { waitForTransactionHash } from "../../utils/waitForTransactionHash";
+import { membershipGasPrice } from "../../prices/gas-prices";
 
 
 export type Membership = {
@@ -49,7 +50,7 @@ export function useBuyMembership(): {
         BigInt(nftUse),
         promoCode,
       ],
-      gasPrice: BigInt(150000000000),
+      gasPrice: membershipGasPrice,
     });
     
     try {

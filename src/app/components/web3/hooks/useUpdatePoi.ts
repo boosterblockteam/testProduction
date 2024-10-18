@@ -7,6 +7,7 @@ import { waitForTransactionHash } from "../utils/waitForTransactionHash";
 import { useTranslations } from "next-intl";
 import { useUser } from "../context/UserProvider";
 import { useGetPoi } from "./useGetPoi";
+import { mainGasPrice } from "../prices/gas-prices";
 
 export type UpdatePoiValidationParams = {
   email?: string;
@@ -110,7 +111,7 @@ export function useUpdatePoi(): {
           encryptedWspLink,
           encryptedBio,
         ],
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
 
       console.log({transaction})

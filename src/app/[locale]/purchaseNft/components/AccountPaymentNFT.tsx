@@ -140,8 +140,13 @@ const AccountPaymentNFT = ({ setStepNft, selectedNFT, setSelectedNFT, listNftBuy
   }
 
   function back() {
-    const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
-    const url = `/register?sponsor=${sponsor}&legside=${legSide}`;
+    let url = "/";
+    if (pathname === "/purchaseNft") {
+      const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
+      url = `/register?sponsor=${sponsor}&legside=${legSide}`;
+    } else if (pathname === "/my-nfts/buy-nft") {
+      url = "/my-nfts";
+    }
     router.push(url);
   }
 

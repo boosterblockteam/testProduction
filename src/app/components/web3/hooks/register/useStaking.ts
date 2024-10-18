@@ -4,6 +4,7 @@ import { stakingContract } from "../../contracts/staking.contract";
 import { useTranslations } from "next-intl";
 import { StakingValidationError, useValidateStaking } from "../validations/useValidateStaking";
 import { waitForTransactionHash } from "../../utils/waitForTransactionHash";
+import { mainGasPrice } from "../../prices/gas-prices";
 
 export type Staking = {
   amount: number;
@@ -60,7 +61,7 @@ export function useStaking(): {
         method: "stake", 
         params: [BigInt(amount), BigInt(nftUse), BigInt(index)],
         // params: [BigInt(250000000), BigInt(0), BigInt(0)], // ACA DEBE TOMAR EL TOTAL DESDE EL LOCALSTORAGE, EL NFT NUMBER DESDE EL LOCALSTORAGE Y EL INDEX SIEMRPE DEBE SER 0
-        gasPrice: BigInt(150000000000),
+        gasPrice: mainGasPrice,
       });
 
       console.log({transaction})
