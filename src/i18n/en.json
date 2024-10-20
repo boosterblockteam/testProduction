@@ -1,7 +1,7 @@
 {
     "locale": "en_US",
     "welcome": "Welcome",
-    "Connect your Wallet": "Connect your Wallet",
+    "Connect your Wallet": "Connect to your account",
     "Connect with Email": "Connect with Email",
     "Welcome to": "Welcome to",
     "Please connect to enter the system": "Please connect to enter the system",
@@ -566,7 +566,7 @@
     "Available Languages for Download": "Available Languages for Download",
     "Spanish": "Spanish",
     "My Stakes": "My Stakes",
-    "Select the Membership you are staking in": "Select the Membership you are staking in",
+    "Select the Membership you are staking in": "Select the Membership you are staking on",
     "Each Membership Stake": "Each Membership Stake",
     "No membership stake data": "No membership stake data",
     "Processing your Stake": "Processing your Stake",
@@ -637,9 +637,14 @@
     "Bonus available to Claim": "Bonus available to Claim",
     "Uploading your New Profile Picture": "Uploading your New Profile Picture",
     "New Profile Picture uploaded successfully": "New Profile Picture uploaded successfully",
+<<<<<<< HEAD
     "New Profile Picture uploaded un-successfully": "New Profile Picture uploaded un-successfully",
     "Today": "Today",
     "You currently have no notifications": "You currently have no notifications",
     "French": "French",
     "Development": "Development"
 }
+=======
+    "New Profile Picture uploaded un-successfully": "New Profile Picture uploaded un-successfully"
+}
+>>>>>>> 0b937ceaaa133b61ed2e1772463d66a0fa705597
