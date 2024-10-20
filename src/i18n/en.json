@@ -587,7 +587,7 @@
     "Account Type": "Account Type",
     "User": "User",
     "Memberships": "Memberships",
-    "Paid Rewards": "Paid Rewards",
+    "Paid Rewards": "Paid Bonus",
     "Team Members": "Team Members",
     "Start date": "Start date",
     "Total Claim": "Total Claim",
@@ -637,5 +637,9 @@
     "Bonus available to Claim": "Bonus available to Claim",
     "Uploading your New Profile Picture": "Uploading your New Profile Picture",
     "New Profile Picture uploaded successfully": "New Profile Picture uploaded successfully",
-    "New Profile Picture uploaded un-successfully": "New Profile Picture uploaded un-successfully"
+    "New Profile Picture uploaded un-successfully": "New Profile Picture uploaded un-successfully",
+    "Today": "Today",
+    "You currently have no notifications": "You currently have no notifications",
+    "French": "French",
+    "Development": "Development"
 }

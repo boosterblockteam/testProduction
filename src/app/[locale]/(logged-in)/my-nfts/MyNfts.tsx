@@ -10,6 +10,7 @@ import { useUser } from "@/app/components/web3/context/UserProvider";
 import { readContract } from "thirdweb";
 import { nftContract } from "../../../components/web3/contracts/nft.contract";
 import { membershipContract } from "@/app/components/web3/contracts/membership.contract";
+import { useRegister } from "@/app/components/web3/hooks/register/useRegister";
 
 const MyNfts = ({ dataInfoUserNfts }) => {
   const t = useTranslations();
@@ -17,8 +18,10 @@ const MyNfts = ({ dataInfoUserNfts }) => {
   const { user } = useUser();
 
   const [infoNfts, setInfoNfts] = useState<any>([]);
+  const { clearRegisterFormsData } = useRegister();
 
   const buttonCreateNewNFT = () => {
+    clearRegisterFormsData();
     router.push("/my-nfts/buy-nft");
   };
 

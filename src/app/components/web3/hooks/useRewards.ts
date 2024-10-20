@@ -10,11 +10,13 @@ export function useRewards(): {
   nftProfit: number;
   nftPayedProfit: number;
   memberProfit: number;
+  memberPayedProfit: number;
   totalRewards: number;
 } {
   const [nftProfit, setNftProfit] = useState(0);
   const [nftPayedProfit, setNftPayedProfit] = useState(0);
   const [memberProfit, setMemberProfit] = useState(0);
+  const [memberPayedProfit, setMemberPayedProfit] = useState(0);
   const [totalRewards, setTotalRewards] = useState(0);
 
   const t = useTranslations();
@@ -30,9 +32,11 @@ export function useRewards(): {
       const nftPayedProfit = await getNftPayedProfit();
       const memberProfit = await getMemberProfit();
       const totalRewards = nftProfit + memberProfit;
+      const memberPayedProfit = await getMemberPayedProfit();
       setNftProfit(prevNftProfit => nftProfit);
       setNftPayedProfit(prevNftPayedProfit => nftPayedProfit);
       setMemberProfit(prevMemberProfit => memberProfit);
+      setMemberPayedProfit(prevMemberPayedProfit => memberPayedProfit);
       setTotalRewards(prevTotalRewards => totalRewards);
     }, 2000);
 
@@ -95,10 +99,24 @@ export function useRewards(): {
     return formattedRewardsMembers
   }
 
+  async function getMemberPayedProfit(): Promise<number> {
+    if (!account || !user?.selectedAccount) {
+      return 0;
+    }
+    const totalPayedRewards = await readContract({ 
+      contract: membershipContract,
+      method: "totalPayedRewards",
+      params: [BigInt(user.selectedAccount.idAccount)], //ID DE CUENTA
+    });
+    const formattedPayedRewardsNFTs = Number(totalPayedRewards) / 1_000_000;
+    return formattedPayedRewardsNFTs
+  }
+
   return {
     nftProfit,
     nftPayedProfit,
     memberProfit,
+    memberPayedProfit,
     totalRewards,
   }
 }

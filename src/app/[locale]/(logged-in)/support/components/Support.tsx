@@ -53,29 +53,29 @@ const Support = () => {
 
   return (
     <div className="bg-gradient-to-t from-[#0E0E33] to-[#39307B] min-h-screen pb-[86px] relative">
-      <div className="px-6 pb-4 container-up-img h-[165px]">
+      <div className="px-6 pb-4 container-up-img h-[155px]">
         <Navbar text={t("Support")} />
       </div>
 
-      <div className="relative -top-[166px] h-[180px]">
+      <div className="relative -top-[166px] h-[150px]">
         <Image src={ArmsPurple} alt="arms" className="absolute top-[120px] sm:top-[110px] w-full" />
       </div>
 
       <div className="text-white text-center text-[14px] px-6">
         <h1 className="text-[24px] font-bold">{t("Need some help")}?</h1>
 
-        <div className="my-4 p-4 rounded-[10px] border border-solid border-[#AD98FF]">
+        <div className="my-4 p-2 rounded-[10px] border border-solid border-[#AD98FF]">
           <p className="mb-1">
             <span className="font-bold">{t("Hello")}! </span>
             {t("If you have any questions about our system, you can visit")}
           </p>
-          <Link href="https://help.defily.ai/" className="text-[#AD98FF] text-[16px] font-bold cursor-pointer" target="_blank">
-            help.defily.ai
+          <Link href="https://app.defily.ai/" className="text-[#AD98FF] text-[16px] font-bold cursor-pointer" target="_blank">
+            defily.ai
           </Link>
           <p className="mt-1">{t("where you'll find a wide variety of information and resources about our DApp")}.</p>
         </div>
 
-        <div className="p-4 rounded-[10px] border border-solid border-[#AD98FF]">
+        <div className="p-2 rounded-[10px] border border-solid border-[#AD98FF]">
           <p>{t("Alternatively for any support inquiries")}</p>
         </div>
 

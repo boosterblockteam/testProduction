@@ -20,7 +20,7 @@ import { Pagination, Navigation } from "swiper/modules";
 
 const Profile = () => {
   return (
-    <div className="pb-[75px] min-h-screen bg-[#F2F3F8] pt-[224px]">
+    <div className="pb-[75px] min-h-screen bg-[#F2F3F8] pt-[240px]">
       <div className="bg-gradient-to-t from-[#0E0E33] to-[#39307B] px-6 py-4 rounded-b-[40px] fixed top-0 z-50 w-full lg:max-w-[360px] lg:mx-auto">
         <Navbar text="Profile" />
         <ProfileHeader />

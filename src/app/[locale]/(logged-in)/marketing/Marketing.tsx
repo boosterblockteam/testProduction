@@ -14,7 +14,7 @@ const Marketing = () => {
 
   return (
     <div className="bg-gradient-to-t from-[#0E0E33] to-[#39307B] min-h-screen pb-[80px]">
-      <div className=" px-6  pb-4 container-up-img h-[160px]">
+      <div className=" px-6  pb-4 container-up-img-sin-h h-[160px]">
         <Navbar text={t("Marketing")} />
       </div>
 
@@ -33,28 +33,31 @@ const Marketing = () => {
         </div>
       </div>
 
-      <ModalComponent isOpen={isModalOpen} setIsOpen={setIsModalOpen} classBody="bg-white w-[280px] h-auto rounded-xl">
+      <ModalComponent isOpen={isModalOpen} setIsOpen={setIsModalOpen} classBody="bg-white w-[300px] h-auto rounded-xl">
         <div className="container-modal">
           <div className="cursor-pointer w-6 absolute top-1 right-1" onClick={() => setIsModalOpen(false)}>
             <Image src={IconCloseSVG} alt="Close Icon" width={20} height={20} />
           </div>
 
-          <div className="p-6 flex flex-col justify-between h-full">
+          <div className="p-4 flex flex-col justify-between h-full">
             <p className="text-[16px] text-[#1E0E39] font-bold mb-6">{t("Available Languages for Download")}:</p>
-            <div>
-              <a href="/[ENGLISH]-DeFily-Opportunity-Presentation-V1.0.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
-                <ButtonPrimary text={t("English")} classname="mb-4" />
+            <div className="grid grid-cols-2 gap-x-2 gap-y-4">
+              <a href="/[ARABIC]-DeFily-Opportunity-Presentation-V1.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
+                <ButtonPrimary text={t("Arabic")} />
               </a>
-              <a href="/[SPANISH]-DeFily-Opportunity-Presentation-V1.0.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
-                <ButtonPrimary text={t("Spanish")} classname="mb-4" />
+              <a href="/[ENGLISH]-DeFily-Opportunity-Presentation-V1.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
+                <ButtonPrimary text={t("English")} />
               </a>
-              <a href="/[RUSSIAN]-DeFily-Opportunity-Presentation-V1.0.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
-                <ButtonPrimary text={t("Russian")} classname="mb-4" />
+              <a href="/[FRENCH]-DeFily-Opportunity-Presentation-V1.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
+                <ButtonPrimary text={t("French")} />
               </a>
-              <a href="/[ARABIC]-DeFily-Opportunity-Presentation-V1.0.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
-                <ButtonPrimary text={t("Arabic")} classname="mb-4" />
+              <a href="/[RUSSIAN]-DeFily-Opportunity-Presentation-V1.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
+                <ButtonPrimary text={t("Russian")} />
               </a>
-              <a href="/[VIETNAMESE]-DeFily-Opportunity-Presentation-V1.0.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
+              <a href="/[SPANISH]-DeFily-Opportunity-Presentation-V1.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
+                <ButtonPrimary text={t("Spanish")} />
+              </a>
+              <a href="/[VIETNAMESE]-DeFily-Opportunity-Presentation-V1.pdf" target="_blank" download={"DeFily-Opportunity-Presentation-V1.0.pdf"}>
                 <ButtonPrimary text={t("Vietnamese")} />
               </a>
             </div>

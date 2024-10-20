@@ -4,11 +4,12 @@ import LogoPeq from "@/assets/imgs/LogoTipoPeq.png";
 import Image from "next/image";
 import ContainerLanguage from "./ContainerLanguage";
 import NotificationsSVG from "@/assets/icons/NotificationsIcon";
-import AccountSVG from "@/assets/icons/Door.svg";
-import SupportSVG from "@/assets/icons/Support.svg";
+import AccountSVG from "@/assets/icons/DoorExit.svg";
+import SupportSVG from "@/assets/icons/SupportNew.svg";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "../web3/context/UserProvider";
+import InternetStatus from "./InternetStatus";
 
 type Props = {
   text: string;
@@ -46,7 +47,7 @@ const Navbar = ({ text }: Props) => {
           <h2 className="text-white text-[16px] font-bold">{text}</h2>
         </div>
       )}
-      <div className={`container-language-notifications flex justify-between items-center w-32`}>
+      <div className={`container-language-notifications flex justify-between items-center w-36`}>
         <Link href={`/accountLogin`} className="cursor-pointer">
           <Image src={AccountSVG} alt="icon" width={20} height={20} />
         </Link>
@@ -55,6 +56,7 @@ const Navbar = ({ text }: Props) => {
         </Link>
         <ContainerLanguage />
         <NotificationsSVG fill="#fff" width={20} height={20} className="cursor-pointer" onClick={() => router.push(`/notifications`)} />
+        <InternetStatus />
       </div>
     </div>
   );

@@ -44,7 +44,7 @@
 }
 
 .buttonDisabled {
-  background-color: gray;
+  background-color: #808080;
   cursor: no-drop;
   padding: 10px 1em;
   color: white;
@@ -170,6 +170,15 @@
   background-size: 100% 100%;
   object-fit: cover;
   height: 167px;
+  padding: 1em 1.5em;
+}
+
+.container-up-img-sin-h {
+  background-image: url("../assets/imgs/BackgroundConnectYourWallet.png");
+  background-repeat: no-repeat;
+  background-position: 0% 0%;
+  background-size: 100% 100%;
+  object-fit: cover;
   padding: 1em 1.5em;
 }
 

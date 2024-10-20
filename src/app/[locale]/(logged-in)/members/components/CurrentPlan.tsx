@@ -6,6 +6,7 @@ import ButtonPrimary from "@/app/components/generals/ButtonPrimary";
 import { useRouter } from "next/navigation";
 import { DataCurrentPlan } from "./moskData";
 import Countdown from "../../../../components/generals/Countdown";
+import { useRegister } from "@/app/components/web3/hooks/register/useRegister";
 
 type Props = {
   dataListCurrents: DataCurrentPlan[];
@@ -16,6 +17,7 @@ const CurrentPlan = ({ dataListCurrents }: Props) => {
   const { updatePlan, ...plan } = useUserPlanStore();
   const router = useRouter();
   const [membresiaActual, setMembresiaActual] = useState(dataListCurrents);
+  const { clearRegisterFormsData } = useRegister();
 
   const buttonStake = () => {
     console.log("stake");
@@ -84,6 +86,7 @@ const CurrentPlan = ({ dataListCurrents }: Props) => {
         <ButtonPrimary
           text={t("Buy New Membership")}
           onClickFn={() => {
+            clearRegisterFormsData();
             router.push(`/members/selectMember`);
           }}
         />

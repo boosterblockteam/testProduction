@@ -19,6 +19,7 @@ import CheckDone from "@/assets/icons/checkDone.svg";
 import RechazedIcon from "@/assets/icons/rechazadoIcon.svg";
 import { Membership } from "./types/membership";
 import { formatCurrencyInteger } from "@/utils/formatCurrency";
+import { useUser } from "@/app/components/web3/context/UserProvider";
 // import ErrorTimeModal from "@/assets/icons/ErrorTimeModal.svg";
 
 interface Props {
@@ -40,23 +41,39 @@ const SelectMembership = ({ listPlans }: Props) => {
   const [modalStatus, setModalStatus] = useState<"idle" | "success" | "used" | "invalid" | "error">("idle");
   const [modalMessage, setModalMessage] = useState("");
   const { applyPromoCode } = usePromoCode();
+  const { user } = useUser();
 
   const confirmMembership = async () => {
     if (selectedPlan) {
-      const { accountParams } = getRegisterFormsData();
+      let nftUse: number | null =  null
+      const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
+      if(pathname === '/membership'){
+        const { accountParams } = getRegisterFormsData();
+  
+        if (!accountParams) {
+          openModal();
+          setModalStatus("error");
+          setModalMessage(`${t("You haven't selected an NFT yet! Go back to the NFT page and select one.")}`);
+          return;
+        }
+        nftUse = accountParams.nftNumber
+      }
 
-      if (!accountParams) {
+      if(pathname === '/members/selectMember'){
+        if(user.selectedAccount){
+          nftUse = user.selectedAccount.idAccount
+        }
+      }
+      if(!nftUse){
         openModal();
         setModalStatus("error");
         setModalMessage(`${t("You haven't selected an NFT yet! Go back to the NFT page and select one.")}`);
         return;
       }
 
-      const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
-
       const errors = await loadBuyMembershipParams({
         id: selectedPlan.id,
-        nftUse: accountParams.nftNumber,
+        nftUse,
         minStake: formatCurrencyInteger(selectedPlan.minStake),
         maxStake: formatCurrencyInteger(selectedPlan.maxStake),
         promoCode: promoCodeApplied,
@@ -104,8 +121,13 @@ const SelectMembership = ({ listPlans }: Props) => {
   }
 
   function back() {
-    const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
-    const url = `/purchaseNft?sponsor=${sponsor}&legside=${legSide}`;
+    let url = "/";
+    if (pathname === "/purchaseNft") {
+      const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
+      url = `/purchaseNft?sponsor=${sponsor}&legside=${legSide}`;
+    } else if (pathname === "/my-nfts/buy-nft/select-membership") {
+      url = "/my-nfts/buy-nft";
+    }
     router.push(url);
   }
 

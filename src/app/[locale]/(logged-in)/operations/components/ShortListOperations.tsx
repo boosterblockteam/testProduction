@@ -23,9 +23,6 @@ const ShortListOperations = ({ dataOperationsHistory }: Props) => {
   return (
     <div className="container-down">
       <div className="text-white ">
-        {/* <h1 className="text-[20px] font-bold mb-[16px]">
-    {t("Profit History")}
-  </h1> */}
         <div>
           {elemetsVisibleByPage.length > 0 ? (
             <>
@@ -40,12 +37,12 @@ const ShortListOperations = ({ dataOperationsHistory }: Props) => {
                       <p className="text-[12px]">{item.year}</p>
                     </div>
                     <div className="container-right">
-                      <p className="text-[14px] text-[#20DABB] font-bold mb-1">
-                        $ {item.amountProfit} {t("Profit")}
+                      <p className={`text-[14px]  font-bold mb-1 ${item.performance >= 0 ? "text-[#20DABB]" : "text-[#FF4C5A]"}`}>
+                        {item.performance === 0 ? t("Development").toUpperCase() : `${item.performance}% ${t("Profit")}`}
                       </p>
-                      <p className={`text-[14px] font-bold`}>
+                      {/* <p className={`text-[14px] font-bold`}>
                         {item.myShare}% {t("My Share")}
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 ))}

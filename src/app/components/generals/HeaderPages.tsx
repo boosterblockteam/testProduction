@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from "react";
 import ContainerLanguage from "./ContainerLanguage";
 import NotificationsSVG from "@/assets/icons/NotificationsIcon";
-import AccountSVG from "@/assets/icons/Door.svg";
-import SupportSVG from "@/assets/icons/Support.svg";
+import AccountSVG from "@/assets/icons/DoorExit.svg";
+import SupportSVG from "@/assets/icons/SupportNew.svg";
 import GoBack from "./GoBack";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import InternetStatus from "./InternetStatus";
 
 type HeaderPagesProps = {
   text: string;
@@ -40,6 +41,7 @@ const HeaderPages = ({ text, linkRouter }: HeaderPagesProps) => {
 
         <ContainerLanguage />
         <NotificationsSVG fill="#fff" width={20} height={20} onClick={() => router.push("/notifications")} />
+        <InternetStatus />
       </div>
     </div>
   );

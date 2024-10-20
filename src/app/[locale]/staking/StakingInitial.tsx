@@ -11,6 +11,8 @@ import ButtonSecondary from "@/app/components/generals/ButtonSecondary";
 import { useRegister } from "@/app/components/web3/hooks/register/useRegister";
 import { getSponsoAndLegSideFromUrl } from "@/utils/getSponsoAndLegSideFromUrl";
 import Navbar from "@/app/components/generals/Navbar";
+import { ServiceProvider } from "@/app/components/providers/service.provider";
+import { useUser } from "@/app/components/web3/context/UserProvider";
 
 const StakingInitial = () => {
   const t = useTranslations();
@@ -23,8 +25,15 @@ const StakingInitial = () => {
   const [max, setMax] = useState<number>(15000);
   const [error, setError] = useState("");
   const { loadStakingParams, clearStakingParams, getRegisterFormsData } = useRegister();
+  const { user } = useUser();
 
   const buttonStake = async () => {
+    if (!user?.selectedAccount) {
+      setError(t("Please connect your wallet"));
+      return;
+    }
+    const { accountService } = ServiceProvider.getInstance().getServices();
+
     if (Number(amount) < min) {
       setError(t(`Amount must be greater than`) + minAmount);
       return;
@@ -57,8 +66,45 @@ const StakingInitial = () => {
     } else if (pathname === "/myTeam/new-own-account/stake") {
       router.push(`/myTeam/new-own-account/total-payment`);
     } else if (pathname === "/my-nfts/buy-nft/stake") {
+      const { accountParams } = getRegisterFormsData();
+
+      if (accountParams) {
+
+        const errors = await loadStakingParams({
+          amount: Number(amount),
+          nftUse: accountParams.nftNumber,
+          index: 0,
+        });
+
+        if (errors) {
+          console.log(errors);
+          setError(errors.amount || errors.message || "");
+          return;
+        }
+      } else {
+        setError(t("You need to select an NFT first"));
+        return;
+      }
+
       router.push(`/my-nfts/buy-nft/total-payment`);
     } else if (pathname === "/members/stake") {
+
+      const { account } = await accountService.getSelectedAccount(user.selectedAccount.wallet)
+
+      const stakeIndex = account.accountMemberships.length;
+
+      const errors = await loadStakingParams({
+        amount: Number(amount),
+        nftUse: user.selectedAccount.idAccount,
+        index: stakeIndex,
+      });
+
+      if (errors) {
+        console.log(errors);
+        setError(errors.amount || errors.message || "");
+        return;
+      }
+
       router.push(`/members/total-payment`);
     } else {
       router.push(`/myTeam/new-partner/total-payment`);
@@ -95,8 +141,13 @@ const StakingInitial = () => {
   }
 
   function back() {
-    const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
-    const url = `/membership?sponsor=${sponsor}&legside=${legSide}`;
+    let url = "/";
+    if (pathname === "/staking") {
+      const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
+      url = `/membership?sponsor=${sponsor}&legside=${legSide}`;
+    } else if (pathname === "/my-nfts/buy-nft/stake") {
+      url = "/my-nfts/buy-nft/select-membership";
+    }
     router.push(url);
   }
 

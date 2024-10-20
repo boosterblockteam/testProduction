@@ -6,6 +6,7 @@ import { MessagesNotifications } from "./moskData";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Navbar from "@/app/components/generals/Navbar";
+import DontNotifications from "@/assets/icons/no-notifications.svg";
 
 interface Props {
   messages: MessagesNotifications[];
@@ -77,7 +78,13 @@ const Notifications = ({ messages }: Props) => {
             </div>
           ))
         ) : (
-          <h1 className="text-[18px] font-bold text-[#554D77] text-center">{t("Does not have notification messages")}</h1>
+          <div>
+            <h1 className="mb-4 text-[14px] font-bold text-[#A9AEB4]">{t("Today").toLocaleUpperCase()}</h1>
+            <div className="p-4 rounded-[10px] bg-white shadow-md flex flex-col items-center">
+              <Image src={DontNotifications} alt="notification" width={80} height={80} />
+              <p className="text-[18px] font-bold text-[#554D77] text-center mt-4">{t("You currently have no notifications")}!</p>
+            </div>
+          </div>
         )}
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { AccountMembership } from "./account-membership";
+
 export type Account = {
   uuid: string;
   wallet: string;
@@ -17,4 +19,5 @@ export type Account = {
   totalDirect: number;
   totalGlobal: number;
   nextLegIsLeft: boolean;
+  accountMemberships: AccountMembership[];
 }

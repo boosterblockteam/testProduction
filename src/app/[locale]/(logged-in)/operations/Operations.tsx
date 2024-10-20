@@ -56,12 +56,15 @@ const Operations = ({ dataOperationsHistory }) => {
 
             <div className="my-4 flex justify-between items-center">
               <h1 className="text-white text-[20px] font-bold ">{t("Operations History")}</h1>
-              <button
+              {/* No borrar este boton por favor se activara cuando irving diga */}
+              {/* <button
                 className="p-2 text-white bgGradientPurpleMedium hover:bg-gradient-to-t from-[#7a2ff4] to-[#7a2ff4] rounded-[10px] cursor-pointer text-[12px] font-bold w-[75px]"
-                onClick={() => setStepNft(2)}
-              >
-                {t("See More")}
-              </button>
+                  onClick={() => setStepNft(2)}
+                >
+                  {t("See More")}
+                 </button> */}
+
+              <button className="p-2 text-white bg-[#808080] rounded-[10px] cursor-pointer text-[12px] font-bold w-[75px]">{t("See More")}</button>
             </div>
 
             <ShortListOperations dataOperationsHistory={dataOperationsHistory} />

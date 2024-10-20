@@ -27,6 +27,7 @@ import { client } from "@/app/components/web3/client";
 import Navbar from "@/app/components/generals/Navbar";
 import { connectButtonOptions } from "@/app/components/web3/components/ConnectWalletButton";
 import { ServiceProvider } from "@/app/components/providers/service.provider";
+import { useUser } from "@/app/components/web3/context/UserProvider";
 
 const TotalPayment = () => {
   const t = useTranslations();
@@ -61,6 +62,7 @@ const TotalPayment = () => {
 
   const { poi, isLoading: isLoadingPoi } = useGetPoi();
   const { nftAccount, isLoading: isLoadingNftAccount } = useGetNftAccount();
+  const { reloadUser } = useUser();
 
   const detailsModal = useWalletDetailsModal();
 
@@ -91,12 +93,13 @@ const TotalPayment = () => {
 
   const loadTotalValues = async () => {
     const { membershipService } = ServiceProvider.getInstance().getServices();
-    const { membershipParams, stakingParams } = getRegisterFormsData();
+    const { accountParams, membershipParams, stakingParams } = getRegisterFormsData();
 
     let membershipPrice = 0;
     let percentage = 0;
     let stakingAmount = 0;
     let discount = 0;
+    const nftPrice = accountParams ? 30 : 0;
 
     if (membershipParams) {
       const { membership } = await membershipService.getMembership(membershipParams.id);
@@ -126,7 +129,7 @@ const TotalPayment = () => {
       stakingAmount = stakingParams.amount;
     }
 
-    const total = 30 + membershipPrice - discount + stakingAmount;
+    const total = nftPrice + membershipPrice - discount + stakingAmount;
 
     setTotalValue(total);
   }
@@ -144,7 +147,7 @@ const TotalPayment = () => {
 
     try {
       const { membershipService } = ServiceProvider.getInstance().getServices();
-      const { membershipParams, stakingParams } = getRegisterFormsData();
+      const { accountParams, membershipParams, stakingParams } = getRegisterFormsData();
 
       if (poi === null) {
         const { errors: errorsCreatePoi } = await createPoiFromStorage();
@@ -158,7 +161,7 @@ const TotalPayment = () => {
       }
       setIsRegisteredUser(true);
 
-      if (nftAccount === null) {
+      if (accountParams) {
         const { errors: errorsApproveBuyNFT } = await approveBuyNFT();
 
         if (errorsApproveBuyNFT) {
@@ -225,7 +228,7 @@ const TotalPayment = () => {
       }
       await new Promise((resolve) => setTimeout(resolve, 3000));
       setStatus("success");
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      await reloadUser();
 
       if (pathname === "/totalPayment") {
         router.push("/dashboard");
@@ -264,8 +267,13 @@ const TotalPayment = () => {
   }
 
   function back() {
-    const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
-    const url = `/staking?sponsor=${sponsor}&legside=${legSide}`;
+    let url = "/";
+    if (pathname === "/totalPayment") {
+      const { sponsor, legSide } = getSponsoAndLegSideFromUrl();
+      url = `/staking?sponsor=${sponsor}&legside=${legSide}`;
+    } else if (pathname === "/my-nfts/buy-nft/total-payment") {
+      url = "/my-nfts/buy-nft/stake";
+    }
     router.push(url);
   }
 
@@ -341,16 +349,19 @@ const TotalPayment = () => {
 
           <div className="py-6 px-4 rounded-[10px] bg-[#ffffff1a] text-white">
             <h1 className="text-[24px] font-bold mb-[40px]">{t("Total Payment")}</h1>
+            {hasToRegister && (
+              <div className="flex justify-between border-b border-solid border-[#ffffff1a] pb-4">
+                <p className="text-[14px] font-bold">{t("User Registration")}</p>
+                <p className="text-[14px]">$0</p>
+              </div>
+            )}
 
-            <div className="flex justify-between border-b border-solid border-[#ffffff1a] pb-4">
-              <p className="text-[14px] font-bold">{t("User Registration")}</p>
-              <p className="text-[14px]">$0</p>
-            </div>
-
-            <div className="flex justify-between border-b border-solid border-[#ffffff1a] py-4">
-              <p className="text-[14px] font-bold">{t("NFT")}</p>
-              <p className="text-[14px]">$30</p>
-            </div>
+            {hastoBuyNFT && (
+              <div className="flex justify-between border-b border-solid border-[#ffffff1a] py-4">
+                <p className="text-[14px] font-bold">{t("NFT")}</p>
+                <p className="text-[14px]">$30</p>
+              </div>
+            )}
 
             <div className=" border-b border-solid border-[#ffffff1a] py-4">
               <div className="flex justify-between">

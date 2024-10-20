@@ -20,7 +20,7 @@ import MarketingIcon from "@/assets/icons/MarketingIcon.svg";
 import ToolsIcon from "@/assets/icons/Tools.svg";
 import SeasonsIcon from "@/assets/icons/seasonsMenu.svg";
 import CharityIcon from "@/assets/icons/charityMenu.svg";
-import SettingsIcon from "@/assets/icons/settingsMenu.svg";
+import SettingsIcon from "@/assets/icons/settingsWhiteColor.svg";
 import ProfileIcon from "@/assets/icons/profileMenu.svg";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -47,13 +47,13 @@ const DraggableMenu: React.FC = () => {
     { id: 1, title: t("My NFTs"), icon: MyAccountsIcon, link: "my-nfts", isActive: true },
     { id: 2, title: t("My Team"), icon: MyTeamIcon, link: "myTeam", isActive: true },
     { id: 3, title: t("Claims"), icon: ClaimIcon, link: "", isActive: true },
-    { id: 4, title: t("Membership"), icon: MembershipIcon, link: "", isActive: true },
+    { id: 4, title: t("Membership"), icon: MembershipIcon, link: "members", isActive: true },
     { id: 5, title: t("Rewards"), icon: RewardPoolIcon, link: "", isActive: true },
     { id: 6, title: t("Ranking"), icon: RankingIcon, link: "", isActive: true },
     { id: 7, title: t("History"), icon: HistoryIcon, link: "", isActive: true },
     { id: 8, title: t("Transactions"), icon: TransactionsIcon, link: "", isActive: true },
     { id: 9, title: t("Governance"), icon: GovernanceIcon, link: "", isActive: true },
-    { id: 10, title: t("Operations"), icon: OperationsIcon, link: "", isActive: true },
+    { id: 10, title: t("Operations"), icon: OperationsIcon, link: "operations", isActive: true },
     { id: 11, title: t("Marketing"), icon: MarketingIcon, link: "marketing", isActive: true },
     { id: 12, title: t("Tools"), icon: ToolsIcon, link: "", isActive: true },
     { id: 13, title: t("Seasons"), icon: SeasonsIcon, link: "", isActive: true },

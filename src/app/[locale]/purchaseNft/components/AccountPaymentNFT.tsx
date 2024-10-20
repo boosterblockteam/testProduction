@@ -203,7 +203,7 @@ const AccountPaymentNFT = ({ setStepNft, selectedNFT, setSelectedNFT, listNftBuy
             </>
           )}
         </div>
-        <div className="flex justify-center mt-5">
+        <div className="flex justify-center mt-6">
           <Pagination
             currentPage={currentPage}
             goToNextPage={goToNextPage}
